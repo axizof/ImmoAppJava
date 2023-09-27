@@ -3,6 +3,7 @@ package com.example.immoapp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import java.util.*;
 
 public class auth {
 
@@ -11,9 +12,10 @@ public class auth {
 
     @FXML
     private TextField id;
-
+    // nv mess
     @FXML
     private Button connexion;
 
-    //rfrfrf
+    private String blabla;
+
 }

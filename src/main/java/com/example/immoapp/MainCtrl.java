@@ -8,6 +8,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class MainCtrl implements Initializable {
@@ -31,6 +34,8 @@ public class MainCtrl implements Initializable {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
+
+
 
         panetop.setOnMouseDragged(event -> {
             Stage stage = (Stage) panetop.getScene().getWindow();

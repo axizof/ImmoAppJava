@@ -45,5 +45,6 @@
                </effect>
             </Label>
          </children></Pane>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
    </children>
 </Pane>

@@ -7,7 +7,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="473.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.auth">
    <children>
-      <Button fx:id="connexion" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D9D9D9;" text="Se connecter">
+      <Button fx:id="connexion" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D9D9D9;" text="Se connecter" onAction="#handleConnexion">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -25,6 +25,6 @@
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <PasswordField layoutX="125.0" layoutY="213.0" prefHeight="35.0" prefWidth="224.0" style="-fx-background-color: #837F85;" />
+      <PasswordField fx:id="mdp" layoutX="125.0" layoutY="213.0" prefHeight="35.0" prefWidth="224.0" style="-fx-background-color: #837F85;" />
    </children>
 </Pane>

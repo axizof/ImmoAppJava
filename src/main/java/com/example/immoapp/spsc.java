@@ -34,6 +34,8 @@ public class spsc implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Bdd bdd = new Bdd();
+        bdd.getConnexion();
         panetop.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();

@@ -7,24 +7,24 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="473.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.auth">
    <children>
-      <Button fx:id="connexion" alignment="CENTER" contentDisplay="CENTER" layoutX="190.0" layoutY="310.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D9D9D9;" text="Se connecter">
+      <Button fx:id="connexion" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D9D9D9;" text="Se connecter">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TextField fx:id="login" layoutX="138.0" layoutY="97.0" prefHeight="35.0" prefWidth="224.0" style="-fx-background-color: #837F85;" styleClass="#837F85" />
-      <Label layoutX="209.0" layoutY="62.0" prefHeight="27.0" prefWidth="82.0" text="Login :" textFill="#fefefe">
+      <TextField fx:id="login" layoutX="125.0" layoutY="91.0" prefHeight="35.0" prefWidth="224.0" style="-fx-background-color: #837F85;" styleClass="#837F85" />
+      <Label layoutX="196.0" layoutY="56.0" prefHeight="27.0" prefWidth="82.0" text="Login :" textFill="#fefefe">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="167.0" layoutY="184.0" text="Mot de passe :" textFill="WHITE">
+      <Label layoutX="154.0" layoutY="178.0" text="Mot de passe :" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <PasswordField layoutX="138.0" layoutY="219.0" prefHeight="35.0" prefWidth="224.0" style="-fx-background-color: #837F85;" />
+      <PasswordField layoutX="125.0" layoutY="213.0" prefHeight="35.0" prefWidth="224.0" style="-fx-background-color: #837F85;" />
    </children>
 </Pane>

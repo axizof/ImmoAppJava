@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="364.0" prefWidth="600.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.spsc">
+   <effect>
+      <Glow />
+   </effect>
+   <children>
+      <Label layoutX="85.0" layoutY="127.0" text="immoAPP" textFill="#fefefe">
+         <font>
+            <Font size="100.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Pane fx:id="panetop" prefHeight="41.0" prefWidth="600.0" style="-fx-background-color: #837F85;">
+         <children>
+            <Pane fx:id="btnclose" layoutX="560.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
+               <children>
+                  <Label fx:id="labelclose" layoutX="7.0" layoutY="-5.0" text="X" textAlignment="CENTER" textFill="#ff7077">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="btnmin" layoutX="515.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
+               <children>
+                  <Label fx:id="labelmin" layoutX="11.0" layoutY="-7.0" text="-" textAlignment="CENTER" textFill="#68a8e1">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </Label>
+               </children>
+            </Pane>
+         </children></Pane>
+   </children>
+</Pane>

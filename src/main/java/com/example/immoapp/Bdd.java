@@ -13,7 +13,7 @@ public class Bdd {
     public Bdd(){
         this.URL = "jdbc:mysql://172.19.0.32:3306/immoAPP";
         this.login = "mysqluser";
-        this.password = "0550002D";
+        this.password = "0550002";
     }
     public void getConnexion(){
         try{
@@ -22,7 +22,8 @@ public class Bdd {
         }catch(SQLException e){
             System.out.println("ERREUR");
             System.out.println(e.getMessage());
-            e.getStackTrace();
+            SQLLogException sqlLogException = new SQLLogException(e);
+            DatabaseManager.logError(sqlLogException);
         }
     }
 }

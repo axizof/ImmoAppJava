@@ -29,9 +29,9 @@ public class auth {
     private void handleConnexion(ActionEvent event) throws IOException {
         String enteredPassword = mdp.getText();
 
-        // Check if the entered password is equal to "admin"
+        // Check si pass = "admin"
         if ("admin".equals(enteredPassword)) {
-            // Load the new scene (Main.fxml in this example)
+            // load the new scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) connexion.getScene().getWindow();

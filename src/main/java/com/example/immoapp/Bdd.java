@@ -13,7 +13,7 @@ public class Bdd {
     public Bdd(){
         this.URL = "jdbc:mysql://172.19.0.32:3306/immoAPP";
         this.login = "mysqluser";
-        this.password = "0550002";
+        this.password = "0550002D";
     }
     public void getConnexion(){
         try{

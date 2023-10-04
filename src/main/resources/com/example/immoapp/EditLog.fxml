@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="601.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.EditLog">
+    <effect>
+        <Glow />
+    </effect>
+    <children>
+        <Pane fx:id="panetop" prefHeight="41.0" prefWidth="600.0" style="-fx-background-color: #837F85;">
+            <children>
+                <Pane fx:id="btnclose" layoutX="560.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
+                    <children>
+                        <Label fx:id="labelclose" layoutX="7.0" layoutY="-5.0" text="X" textAlignment="CENTER" textFill="#ff7077">
+                            <font>
+                                <Font size="32.0" />
+                            </font>
+                            <effect>
+                                <Glow />
+                            </effect>
+                        </Label>
+                    </children>
+                </Pane>
+                <Pane fx:id="btnmin" layoutX="515.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
+                    <children>
+                        <Label fx:id="labelmin" layoutX="11.0" layoutY="-7.0" text="-" textAlignment="CENTER" textFill="#68a8e1">
+                            <font>
+                                <Font size="32.0" />
+                            </font>
+                            <effect>
+                                <Glow />
+                            </effect>
+                        </Label>
+                    </children>
+                </Pane>
+            </children></Pane>
+        <Label layoutX="11.0" layoutY="6.0" text="immoAPP" textFill="#fefefe">
+            <font>
+                <Font size="20.0" />
+            </font>
+            <effect>
+                <Glow />
+            </effect>
+        </Label>
+      <Label layoutX="203.0" layoutY="56.0" text="Edition Logement" textFill="#fefefe">
+         <font>
+            <Font size="25.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Spinner layoutX="48.0" layoutY="297.0" prefHeight="25.0" prefWidth="128.0" />
+      <Label layoutX="64.0" layoutY="266.0" text="Nombre de pièce" textFill="#fefefe">
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <TextField layoutX="116.0" layoutY="120.0" prefHeight="35.0" prefWidth="261.0">
+         <font>
+            <Font size="19.0" />
+         </font></TextField>
+      <Label layoutX="33.0" layoutY="125.0" text="Libelle" textFill="#fefefe">
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField layoutX="119.0" layoutY="190.0" prefHeight="35.0" prefWidth="261.0">
+         <font>
+            <Font size="19.0" />
+         </font></TextField>
+      <Label layoutX="26.0" layoutY="193.0" text="Adresse" textFill="#fefefe">
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+    </children>
+</Pane>

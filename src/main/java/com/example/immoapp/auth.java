@@ -51,7 +51,7 @@ public class auth {
                 login.setString(1, enteredLogin);
                 ResultSet resultat = login.executeQuery();
                 if(resultat.next()){
-                    if(resultat.getString(2).equals(enteredPassword)) {
+                    if(BCrypt.checkpw(enteredPassword, resultat.getString(2))) {
                         resultat.close();
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
                         Parent root = loader.load();

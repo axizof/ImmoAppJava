@@ -1,18 +1,42 @@
 package com.example.immoapp;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainCtrl implements Initializable {
+    @FXML
+    private TableView<BienImmobilier> tableView;
+    @FXML
+    private TableColumn<BienImmobilier, String> nomColumn;
+    @FXML
+    private TableColumn<BienImmobilier, Integer> nbPiecesColumn;
+    @FXML
+    private TableColumn<BienImmobilier, String> codePostalColumn;
+    @FXML
+    private TableColumn<BienImmobilier, String> villeColumn;
+    @FXML
+    private TextField filterTextField;
 
+    private ObservableList<BienImmobilier> biens = FXCollections.observableArrayList();
     private double xOffset = 0;
     private double yOffset = 0;
     @FXML
@@ -54,6 +78,122 @@ public class MainCtrl implements Initializable {
             Stage stage = (Stage) panetop.getScene().getWindow();
             stage.setIconified(true);
         });
-    }
 
+        // Initialisation de la TableView avec les données des biens
+        tableView.setItems(biens);
+        // Association des colonnes de la TableView aux propriétés du modèle BienImmobilier
+        nomColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
+        nbPiecesColumn.setCellValueFactory(cellData -> cellData.getValue().nbPiecesProperty().asObject());
+        codePostalColumn.setCellValueFactory(cellData -> cellData.getValue().codePostalProperty());
+        villeColumn.setCellValueFactory(cellData -> cellData.getValue().villeProperty());
+
+        // Ajout d'un Listener pour le filtre par code postal
+        filterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterByPostalCode(newValue);
+        });
+
+        // Chargement des logements depuis la base de données
+        loadLogementsFromDatabase();
+    }
+    // Méthode pour filtrer les biens par code postal
+    private void filterByPostalCode(String postalCode) {
+        if (postalCode == null || postalCode.isEmpty()) {
+            // Si le champ est vide on affiche tous les biens
+            tableView.setItems(biens);
+        } else {
+            // Filtre de la liste des biens en fonction du code postal
+            ObservableList<BienImmobilier> filteredList = FXCollections.observableArrayList();
+            for (BienImmobilier bien : biens) {
+                if (bien.getCodePostal().contains(postalCode)) {
+                    filteredList.add(bien);
+                }
+            }
+            // Mettre à jour la TableView suivant les résultats du filtre
+            tableView.setItems(filteredList);
+        }
+    }
+    // chargement des logements depuis la base de données
+    private void loadLogementsFromDatabase() {
+        String jdbcUrl = "jdbc:mysql://172.19.0.32:3306/immoAPP";
+        String username = "mysqluser";
+        String password = "0550002D";
+
+        try {
+            // connexion à la base de données
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+            // requête SQL pour sélectionner les logements
+            String sql = "SELECT libelle, nbPiece, cp, ville FROM Logement";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // Exécution de la requête SQL
+            ResultSet rs = stmt.executeQuery();
+
+            // Parcour les résultats et ajouter les logements à la liste
+            while (rs.next()) {
+                String libelle = rs.getString("libelle");
+                int nbPieces = rs.getInt("nbPiece");
+                String cp = rs.getString("cp");
+                String ville = rs.getString("ville");
+
+                // Créez un objet BienImmobilier et ajout dans à la liste
+                BienImmobilier bien = new BienImmobilier(libelle, nbPieces, cp, ville);
+                biens.add(bien);
+            }
+
+            // Fermer les truc ouvert
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    // Modèle BienImmobilier
+    public static class BienImmobilier {
+        private final StringProperty nom = new SimpleStringProperty();
+        private final IntegerProperty nbPieces = new SimpleIntegerProperty();
+        private final StringProperty codePostal = new SimpleStringProperty();
+        private final StringProperty ville = new SimpleStringProperty();
+
+        public BienImmobilier(String nom, int nbPieces, String codePostal, String ville) {
+            this.nom.set(nom);
+            this.nbPieces.set(nbPieces);
+            this.codePostal.set(codePostal);
+            this.ville.set(ville);
+        }
+
+        // Getters
+        public String getNom() {
+            return nom.get();
+        }
+
+        public StringProperty nomProperty() {
+            return nom;
+        }
+
+        public int getNbPieces() {
+            return nbPieces.get();
+        }
+
+        public IntegerProperty nbPiecesProperty() {
+            return nbPieces;
+        }
+
+        public String getCodePostal() {
+            return codePostal.get();
+        }
+
+        public StringProperty codePostalProperty() {
+            return codePostal;
+        }
+
+        public String getVille() {
+            return ville.get();
+        }
+
+        public StringProperty villeProperty() {
+            return ville;
+        }
+    }
 }

@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Font?>
-<Scene xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.MainCtrl">
-      <root>
-         <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1429.0" style="-fx-background-color: #606063;">
-            <effect>
-               <Glow />
-            </effect>
-            <children>
-               <Pane fx:id="panetop" prefHeight="41.0" prefWidth="1429.0" style="-fx-background-color: #837F85;">
-                  <children>
-                     <Pane fx:id="btnclose" layoutX="1382.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
-                        <children>
-                           <Label fx:id="labelclose" layoutX="7.0" layoutY="-5.0" text="X" textAlignment="CENTER" textFill="#ff7077">
-                              <font>
-                                 <Font size="32.0" />
-                              </font>
-                              <effect>
-                                 <Glow />
-                              </effect>
-                           </Label>
-                        </children>
-                     </Pane>
-                     <Pane fx:id="btnmin" layoutX="1336.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
-                        <children>
-                           <Label fx:id="labelmin" layoutX="11.0" layoutY="-7.0" text="-" textAlignment="CENTER" textFill="#68a8e1">
-                              <font>
-                                 <Font size="32.0" />
-                              </font>
-                              <effect>
-                                 <Glow />
-                              </effect>
-                           </Label>
-                        </children>
-                     </Pane>
-                     <Label layoutX="17.0" layoutY="5.0" text="immoAPP" textFill="#fefefe">
-                        <font>
-                           <Font size="22.0" />
-                        </font>
-                        <effect>
-                           <Glow />
-                        </effect>
-                     </Label>
-                  </children>
-               </Pane>
-            </children>
-            <children>
-               <TableView fx:id="tableView" layoutX="14.0" layoutY="89.0" prefHeight="686.0" prefWidth="1048.0">
-                  <columns>
-                     <TableColumn fx:id="nomColumn" prefWidth="112.0" text="Nom" />
-                     <TableColumn fx:id="nbPiecesColumn" minWidth="0.0" prefWidth="175.0" text="Nombre de Pièces" />
-                     <TableColumn fx:id="codePostalColumn" prefWidth="180.0" text="Code Postal" />
-                     <TableColumn fx:id="villeColumn" prefWidth="113.0" text="Ville" />
-                  </columns>
-               </TableView>
-               <Label layoutX="14.0" layoutY="57.0" text="Filtrer par code postal:" />
-               <TextField fx:id="filterTextField" layoutX="146.0" layoutY="53.0" />
-            </children>
-         </Pane>
-      </root>
-   </Scene>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1429.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.MainCtrl">
+   <effect>
+      <Glow />
+   </effect>
+   <children>
+      <Pane fx:id="panetop" prefHeight="41.0" prefWidth="1429.0" style="-fx-background-color: #837F85;">
+         <children>
+            <Pane fx:id="btnclose" layoutX="1382.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
+               <children>
+                  <Label fx:id="labelclose" layoutX="7.0" layoutY="-5.0" text="X" textAlignment="CENTER" textFill="#ff7077">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="btnmin" layoutX="1336.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
+               <children>
+                  <Label fx:id="labelmin" layoutX="11.0" layoutY="-7.0" text="-" textAlignment="CENTER" textFill="#68a8e1">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </Label>
+               </children>
+            </Pane>
+            <Label layoutX="17.0" layoutY="5.0" text="immoAPP" textFill="#fefefe">
+               <font>
+                  <Font size="22.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Label>
+         </children></Pane>
+   </children>
+   <children>
+      <TableView fx:id="tableView" layoutX="14.0" layoutY="89.0" prefHeight="686.0" prefWidth="1048.0" style="-fx-background-color: #606063; -fx-border-color: #FEFEFE;">
+         <columns>
+            <TableColumn fx:id="nomColumn" prefWidth="112.0" text="Nom" />
+            <TableColumn fx:id="nbPiecesColumn" minWidth="0.0" prefWidth="175.0" text="Nombre de Pièces" />
+            <TableColumn fx:id="codePostalColumn" prefWidth="180.0" text="Code Postal" />
+            <TableColumn fx:id="villeColumn" prefWidth="113.0" text="Ville" />
+         </columns>
+      </TableView>
+      <Label layoutX="14.0" layoutY="57.0" text="Filtrer par code postal:" textFill="#fefefe">
+         <effect>
+            <Glow />
+         </effect></Label>
+      <TextField fx:id="filterTextField" layoutX="146.0" layoutY="53.0" style="-fx-background-color: #837F85;">
+         <effect>
+            <Glow level="1.0" />
+         </effect></TextField>
+   </children>
+</Pane>

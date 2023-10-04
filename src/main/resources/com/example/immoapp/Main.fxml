@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1429.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.MainCtrl">
    <effect>
       <Glow />
@@ -49,10 +50,12 @@
    <children>
       <TableView fx:id="tableView" layoutX="14.0" layoutY="89.0" prefHeight="686.0" prefWidth="1048.0" style="-fx-background-color: #606063; -fx-border-color: #FEFEFE;">
          <columns>
-            <TableColumn fx:id="nomColumn" prefWidth="112.0" text="Nom" />
-            <TableColumn fx:id="nbPiecesColumn" minWidth="0.0" prefWidth="175.0" text="Nombre de Pièces" />
-            <TableColumn fx:id="codePostalColumn" prefWidth="180.0" text="Code Postal" />
-            <TableColumn fx:id="villeColumn" prefWidth="113.0" text="Ville" />
+            <TableColumn fx:id="idColumn" text="Id"/>
+            <TableColumn fx:id="nomColumn" text="Nom" />
+            <TableColumn fx:id="nbPiecesColumn" text="Nombre de Pièces" />
+            <TableColumn fx:id="codePostalColumn" text="Code Postal" />
+            <TableColumn fx:id="villeColumn" text="Ville" />
+            <TableColumn fx:id="adresselog" text="Addresse" />
          </columns>
       </TableView>
       <Label layoutX="14.0" layoutY="57.0" text="Filtrer par code postal:" textFill="#fefefe">

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="699.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label layoutX="241.0" layoutY="67.0" text="Ajouter un logement" textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="25.0" />
+            </font>
+        </Label>
+        <Label layoutX="21.0" layoutY="152.0" prefHeight="26.0" prefWidth="60.0" text="Titre : " textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </Label>
+        <TextField fx:id="titre" layoutX="160.0" layoutY="143.0" prefHeight="39.0" prefWidth="506.0" promptText="Titre de l'annonce" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+            <font>
+                <Font size="19.0" />
+            </font></TextField>
+        <Button layoutX="286.0" layoutY="422.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="127.0" text="Ajouter">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Button>
+        <Label layoutX="21.0" layoutY="218.0" text="Adresse : " textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </Label>
+        <TextField fx:id="adresse" layoutX="160.0" layoutY="212.0" prefHeight="39.0" prefWidth="506.0" promptText="ex : 4 rue dans ton cul" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </TextField>
+        <Label layoutX="21.0" layoutY="290.0" text="Ville :" textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </Label>
+        <TextField fx:id="ville" layoutX="160.0" layoutY="285.0" prefHeight="40.0" prefWidth="157.0" promptText="ex : Paris" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </TextField>
+        <Label layoutX="356.0" layoutY="290.0" text="Code Postal :" textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </Label>
+        <TextField fx:id="cp" layoutX="517.0" layoutY="285.0" prefHeight="40.0" prefWidth="149.0" promptText="ex : 55000" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </TextField>
+        <CheckBox fx:id="1" layoutX="126.0" layoutY="352.0" mnemonicParsing="false" text="Appartement " textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </CheckBox>
+        <CheckBox fx:id="2" layoutX="413.0" layoutY="354.0" mnemonicParsing="false" text="Maison" textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </CheckBox>
+    </children>
+</Pane>

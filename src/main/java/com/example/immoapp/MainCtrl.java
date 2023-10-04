@@ -34,6 +34,10 @@ public class MainCtrl implements Initializable {
     @FXML
     private TableColumn<BienImmobilier, String> villeColumn;
     @FXML
+    private TableColumn<BienImmobilier, Integer> idColumn;
+    @FXML
+    private TableColumn<BienImmobilier, String> adresselog;
+    @FXML
     private TextField filterTextField;
 
     private ObservableList<BienImmobilier> biens = FXCollections.observableArrayList();
@@ -82,10 +86,12 @@ public class MainCtrl implements Initializable {
         // Initialisation de la TableView avec les données des biens
         tableView.setItems(biens);
         // Association des colonnes de la TableView aux propriétés du modèle BienImmobilier
+        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
         nbPiecesColumn.setCellValueFactory(cellData -> cellData.getValue().nbPiecesProperty().asObject());
         codePostalColumn.setCellValueFactory(cellData -> cellData.getValue().codePostalProperty());
         villeColumn.setCellValueFactory(cellData -> cellData.getValue().villeProperty());
+        adresselog.setCellValueFactory(cellData -> cellData.getValue().addresseProperty());
 
         // Ajout d'un Listener pour le filtre par code postal
         filterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -123,7 +129,7 @@ public class MainCtrl implements Initializable {
             Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
 
             // requête SQL pour sélectionner les logements
-            String sql = "SELECT libelle, nbPiece, cp, ville FROM Logement";
+            String sql = "SELECT libelle, nbPiece, cp, ville,id,adresse FROM Logement";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             // Exécution de la requête SQL
@@ -135,9 +141,11 @@ public class MainCtrl implements Initializable {
                 int nbPieces = rs.getInt("nbPiece");
                 String cp = rs.getString("cp");
                 String ville = rs.getString("ville");
+                int idlog = rs.getInt("id");
+                String adresselog = rs.getString("adresse");
 
                 // Créez un objet BienImmobilier et ajout dans à la liste
-                BienImmobilier bien = new BienImmobilier(libelle, nbPieces, cp, ville);
+                BienImmobilier bien = new BienImmobilier(libelle, nbPieces, cp, ville, idlog, adresselog);
                 biens.add(bien);
             }
 
@@ -149,18 +157,25 @@ public class MainCtrl implements Initializable {
             e.printStackTrace();
         }
     }
+
+
+
     // Modèle BienImmobilier
     public static class BienImmobilier {
         private final StringProperty nom = new SimpleStringProperty();
         private final IntegerProperty nbPieces = new SimpleIntegerProperty();
         private final StringProperty codePostal = new SimpleStringProperty();
         private final StringProperty ville = new SimpleStringProperty();
+        private final IntegerProperty idlog = new SimpleIntegerProperty();
+        private final StringProperty adresselog = new SimpleStringProperty();
 
-        public BienImmobilier(String nom, int nbPieces, String codePostal, String ville) {
+        public BienImmobilier(String nom, int nbPieces, String codePostal, String ville,int idlog, String adresselog) {
             this.nom.set(nom);
             this.nbPieces.set(nbPieces);
             this.codePostal.set(codePostal);
             this.ville.set(ville);
+            this.idlog.set(idlog);
+            this.adresselog.set(adresselog);
         }
 
         // Getters
@@ -194,6 +209,21 @@ public class MainCtrl implements Initializable {
 
         public StringProperty villeProperty() {
             return ville;
+        }
+
+        public String getAddresse() {
+            return adresselog.get();
+        }
+
+        public StringProperty addresseProperty() {
+            return adresselog;
+        }
+        public int getIdlog() {
+            return idlog.get();
+        }
+
+        public IntegerProperty idProperty() {
+            return idlog;
         }
     }
 }

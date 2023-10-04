@@ -1,12 +1,12 @@
-   <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-   <?import javafx.scene.*?>
-   <?import javafx.scene.control.*?>
-   <?import javafx.scene.effect.*?>
-   <?import javafx.scene.layout.*?>
-   <?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
 
-   <Scene xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.MainCtrl">
+<?import javafx.scene.text.Font?>
+<Scene xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.MainCtrl">
       <root>
          <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1429.0" style="-fx-background-color: #606063;">
             <effect>
@@ -49,6 +49,18 @@
                      </Label>
                   </children>
                </Pane>
+            </children>
+            <children>
+               <TableView fx:id="tableView" layoutX="14.0" layoutY="89.0" prefHeight="686.0" prefWidth="1048.0">
+                  <columns>
+                     <TableColumn fx:id="nomColumn" prefWidth="112.0" text="Nom" />
+                     <TableColumn fx:id="nbPiecesColumn" minWidth="0.0" prefWidth="175.0" text="Nombre de Pièces" />
+                     <TableColumn fx:id="codePostalColumn" prefWidth="180.0" text="Code Postal" />
+                     <TableColumn fx:id="villeColumn" prefWidth="113.0" text="Ville" />
+                  </columns>
+               </TableView>
+               <Label layoutX="14.0" layoutY="57.0" text="Filtrer par code postal:" />
+               <TextField fx:id="filterTextField" layoutX="146.0" layoutY="53.0" />
             </children>
          </Pane>
       </root>

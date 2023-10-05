@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -28,12 +29,31 @@ public class spsc implements Initializable {
     @FXML
     private Label labelmin;
 
+    @FXML
+    private ProgressBar pgbar;
+
     protected void onHelloButtonClick() {
         System.out.println("Welcome to JavaFX Application!");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        pgbar.setProgress(0.0);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i <= 100; i++) {
+                    final int finalI = i;
+                    try {
+                        Thread.sleep(25);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    pgbar.setProgress(finalI / 100.0);
+                }
+            }
+        }).start();
+
         Bdd bdd = new Bdd();
         bdd.getConnexion();
         panetop.setOnMousePressed(event -> {

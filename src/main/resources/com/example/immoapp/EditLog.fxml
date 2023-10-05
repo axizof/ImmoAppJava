@@ -53,8 +53,8 @@
             <Glow />
          </effect>
       </Label>
-      <Spinner layoutX="48.0" layoutY="297.0" prefHeight="25.0" prefWidth="128.0" />
-      <Label layoutX="64.0" layoutY="266.0" text="Nombre de pièce" textFill="#fefefe">
+      <Spinner layoutX="437.0" layoutY="139.0" prefHeight="25.0" prefWidth="128.0" />
+      <Label layoutX="455.0" layoutY="112.0" text="Nombre de pièce" textFill="#fefefe">
          <effect>
             <Glow />
          </effect>

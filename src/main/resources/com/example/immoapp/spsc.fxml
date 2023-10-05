@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
@@ -45,5 +46,12 @@
                </children>
             </Pane>
          </children></Pane>
+      <ProgressBar fx:id="pgbar" layoutX="4.0" layoutY="340.0" prefWidth="590.0" progress="0.53">
+         <effect>
+            <Glow level="0.43" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="WAIT" />
+         </cursor></ProgressBar>
    </children>
 </Pane>

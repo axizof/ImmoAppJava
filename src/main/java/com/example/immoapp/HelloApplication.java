@@ -30,7 +30,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2.5), event -> {
             stage.hide();
             showAuthPage();
         }));

@@ -129,7 +129,9 @@ public class MainCtrl implements Initializable {
             Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
 
             // requête SQL pour sélectionner les logements
-            String sql = "SELECT libelle, nbPiece, cp, ville,id,adresse FROM Logement";
+            String sql = "SELECT L.libelle, COUNT(P.id_Logement), L.cp, L.ville, L.id, L.adresse " +
+                    "FROM Logement L " +
+                    "JOIN Piece P ON L.id = P.id_Logement";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             // Exécution de la requête SQL
@@ -138,7 +140,7 @@ public class MainCtrl implements Initializable {
             // Parcour les résultats et ajouter les logements à la liste
             while (rs.next()) {
                 String libelle = rs.getString("libelle");
-                int nbPieces = rs.getInt("nbPiece");
+                int nbPieces = rs.getInt("COUNT(P.id_Logement)");
                 String cp = rs.getString("cp");
                 String ville = rs.getString("ville");
                 int idlog = rs.getInt("id");

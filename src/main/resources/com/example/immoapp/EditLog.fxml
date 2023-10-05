@@ -83,5 +83,10 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
+      <Label layoutX="465.0" layoutY="122.0" text="Nombre de pièce" textFill="#fefefe">
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
     </children>
 </Pane>

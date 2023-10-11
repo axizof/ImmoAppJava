@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="699.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="699.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.AddBien">
     <children>
         <Label layoutX="241.0" layoutY="67.0" text="Ajouter un logement" textFill="WHITE">
             <font>
@@ -20,7 +20,7 @@
             <font>
                 <Font size="19.0" />
             </font></TextField>
-        <Button layoutX="286.0" layoutY="422.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="127.0" text="Ajouter">
+        <Button onAction="#BtnAjoutClick" layoutX="286.0" layoutY="422.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="127.0" text="Ajouter">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
@@ -55,12 +55,12 @@
                 <Font size="19.0" />
             </font>
         </TextField>
-        <CheckBox fx:id="1" layoutX="126.0" layoutY="352.0" mnemonicParsing="false" text="Appartement " textFill="WHITE">
+        <CheckBox fx:id="CheckAppart" layoutX="126.0" layoutY="352.0" mnemonicParsing="false" text="Appartement " textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </CheckBox>
-        <CheckBox fx:id="2" layoutX="413.0" layoutY="354.0" mnemonicParsing="false" text="Maison" textFill="WHITE">
+        <CheckBox fx:id="CheckMaison" layoutX="413.0" layoutY="354.0" mnemonicParsing="false" text="Maison" textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>

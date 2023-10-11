@@ -4,6 +4,7 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Font?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1429.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.MainCtrl">
    <effect>
       <Glow />
@@ -64,6 +65,7 @@
          <effect>
             <Glow level="1.0" />
          </effect></TextField>
-      <Button fx:id="EditBtn" layoutX="1110.0" layoutY="98.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="290.0" text="Edit" />
+      <Button fx:id="EditBtn" layoutX="1110.0" layoutY="189.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="290.0" text="Edit Logement" />
+      <Button fx:id="AddBtnLog" layoutX="1110.0" layoutY="89.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="290.0" text="Add Logement" />
    </children>
 </Pane>

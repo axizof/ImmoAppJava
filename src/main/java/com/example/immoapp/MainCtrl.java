@@ -60,9 +60,9 @@ public class MainCtrl implements Initializable {
     private Label labelmin;
     @FXML
     private Button EditBtn;
+    @FXML
+    private Button AddBtnLog;
 
-    @Inject
-    private EditLog editLogController;
 
 
     @Override
@@ -119,6 +119,20 @@ public class MainCtrl implements Initializable {
         // Ajout d'un Listener pour le filtre par code postal
         filterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filterByPostalCode(newValue);
+        });
+
+        AddBtnLog.setOnAction(event -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBien.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         // Chargement des logements depuis la base de données

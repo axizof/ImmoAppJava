@@ -66,15 +66,21 @@
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </CheckBox>
-      <Button layoutX="130.0" layoutY="511.0" mnemonicParsing="false" onAction="#BtnAjoutClick" prefHeight="30.0" prefWidth="103.0" text="Ajouter une image">
+      <Button layoutX="80.0" layoutY="511.0" mnemonicParsing="false" onAction="#BtnAjoutImage" prefHeight="30.0" prefWidth="103.0" text="Ajouter une image">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>
       </Button>
       <Pane layoutX="86.0" layoutY="364.0" prefHeight="139.0" prefWidth="200.0" style="-fx-background-color: #837F85;">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
+            <ImageView fx:id="ImagePreview" fitHeight="139.0" fitWidth="200.0" pickOnBounds="true" />
+         </children></Pane>
+      <Button layoutX="48.0" layoutY="421.0" mnemonicParsing="false" onAction="#BtnLeftPreview" text="&lt;-" />
+      <Button layoutX="294.0" layoutY="421.0" mnemonicParsing="false" onAction="#BtnRightPreview" text="-&gt;" />
+      <Button layoutX="189.0" layoutY="511.0" mnemonicParsing="false" onAction="#BtnSupprImage" prefHeight="30.0" prefWidth="103.0" text="Supprimer L'image">
+         <font>
+            <Font name="System Bold" size="9.0" />
+         </font>
+      </Button>
     </children>
 </Pane>

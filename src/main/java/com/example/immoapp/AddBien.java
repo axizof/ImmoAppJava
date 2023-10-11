@@ -54,4 +54,12 @@ public class AddBien {
     public void BtnAjoutClick(ActionEvent actionEvent) {
         addBien(titre.getText(), 0, cp.getText(), ville.getText(), 0, adresse.getText());
     }
+    public void CheckVerif(ActionEvent actionEvent){
+        if(actionEvent.getSource().toString().contains("CheckAppart")){
+            CheckMaison.setSelected(false);
+        }
+        else{
+            CheckAppart.setSelected(false);
+        }
+    }
 }

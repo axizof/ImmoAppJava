@@ -1,69 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="699.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.AddBien">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="703.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.AddBien">
     <children>
-        <Label layoutX="241.0" layoutY="67.0" text="Ajouter un logement" textFill="WHITE">
+        <Label layoutX="241.0" layoutY="28.0" text="Ajouter un logement" textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="25.0" />
             </font>
         </Label>
-        <Label layoutX="21.0" layoutY="152.0" prefHeight="26.0" prefWidth="60.0" text="Titre : " textFill="WHITE">
+        <Label layoutX="21.0" layoutY="113.0" prefHeight="26.0" prefWidth="60.0" text="Titre : " textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </Label>
-        <TextField fx:id="titre" layoutX="160.0" layoutY="143.0" prefHeight="39.0" prefWidth="506.0" promptText="Titre de l'annonce" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+        <TextField fx:id="titre" layoutX="160.0" layoutY="104.0" prefHeight="39.0" prefWidth="506.0" promptText="Titre de l'annonce" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
             <font>
                 <Font size="19.0" />
             </font></TextField>
-        <Button onAction="#BtnAjoutClick" layoutX="286.0" layoutY="422.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="127.0" text="Ajouter">
+        <Button layoutX="550.0" layoutY="483.0" mnemonicParsing="false" onAction="#BtnAjoutClick" prefHeight="60.0" prefWidth="127.0" text="Ajouter">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
         </Button>
-        <Label layoutX="21.0" layoutY="218.0" text="Adresse : " textFill="WHITE">
+        <Label layoutX="21.0" layoutY="179.0" text="Adresse : " textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </Label>
-        <TextField fx:id="adresse" layoutX="160.0" layoutY="212.0" prefHeight="39.0" prefWidth="506.0" promptText="ex : 4 rue dans ton cul" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+        <TextField fx:id="adresse" layoutX="160.0" layoutY="173.0" prefHeight="39.0" prefWidth="506.0" promptText="ex : 4 rue dans ton cul" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
             <font>
                 <Font size="19.0" />
             </font>
         </TextField>
-        <Label layoutX="21.0" layoutY="290.0" text="Ville :" textFill="WHITE">
+        <Label layoutX="21.0" layoutY="251.0" text="Ville :" textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </Label>
-        <TextField fx:id="ville" layoutX="160.0" layoutY="285.0" prefHeight="40.0" prefWidth="157.0" promptText="ex : Paris" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+        <TextField fx:id="ville" layoutX="160.0" layoutY="246.0" prefHeight="40.0" prefWidth="157.0" promptText="ex : Paris" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
             <font>
                 <Font size="19.0" />
             </font>
         </TextField>
-        <Label layoutX="356.0" layoutY="290.0" text="Code Postal :" textFill="WHITE">
+        <Label layoutX="356.0" layoutY="251.0" text="Code Postal :" textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </Label>
-        <TextField fx:id="cp" layoutX="517.0" layoutY="285.0" prefHeight="40.0" prefWidth="149.0" promptText="ex : 55000" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+        <TextField fx:id="cp" layoutX="517.0" layoutY="246.0" prefHeight="40.0" prefWidth="149.0" promptText="ex : 55000" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
             <font>
                 <Font size="19.0" />
             </font>
         </TextField>
-        <CheckBox fx:id="CheckAppart" layoutX="126.0" layoutY="352.0" mnemonicParsing="false" text="Appartement " textFill="WHITE">
+        <CheckBox fx:id="CheckAppart" layoutX="126.0" layoutY="313.0" mnemonicParsing="false" onAction="#CheckVerif" text="Appartement " textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </CheckBox>
-        <CheckBox fx:id="CheckMaison" layoutX="413.0" layoutY="354.0" mnemonicParsing="false" text="Maison" textFill="WHITE">
+        <CheckBox fx:id="CheckMaison" layoutX="413.0" layoutY="315.0" mnemonicParsing="false" onAction="#CheckVerif" text="Maison" textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </CheckBox>
+      <Button layoutX="130.0" layoutY="511.0" mnemonicParsing="false" onAction="#BtnAjoutClick" prefHeight="30.0" prefWidth="103.0" text="Ajouter une image">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Button>
+      <Pane layoutX="86.0" layoutY="364.0" prefHeight="139.0" prefWidth="200.0" style="-fx-background-color: #837F85;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
     </children>
 </Pane>

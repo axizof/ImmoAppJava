@@ -137,8 +137,10 @@ public class AddBien {
 
     public void BtnLeftPreview(ActionEvent actionEvent) {
         try {
-            if (ImagesBase64.get(ImagesBase64.indexOf(CurrentBLob64) - 1) != null){
+            int IndCurrentBLob64 = ImagesBase64.indexOf(CurrentBLob64);
+            if (IndCurrentBLob64 != -1 && IndCurrentBLob64 > 0){
                 CurrentBLob64 = ImagesBase64.get(ImagesBase64.indexOf(CurrentBLob64) - 1);
+                ImagePreview.setImage(new Image(CurrentBLob64));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,8 +149,10 @@ public class AddBien {
 
     public void BtnRightPreview(ActionEvent actionEvent) {
         try {
-            if (ImagesBase64.get(ImagesBase64.indexOf(CurrentBLob64) + 1) != null){
+            int IndCurrentBLob64 = ImagesBase64.indexOf(CurrentBLob64);
+            if (IndCurrentBLob64 != -1 && IndCurrentBLob64 < ImagesBase64.size() - 1){
                 CurrentBLob64 = ImagesBase64.get(ImagesBase64.indexOf(CurrentBLob64) + 1);
+                ImagePreview.setImage(new Image(CurrentBLob64));
             }
         } catch (Exception e) {
             e.printStackTrace();

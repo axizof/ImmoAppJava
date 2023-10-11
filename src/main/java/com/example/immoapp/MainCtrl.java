@@ -5,15 +5,20 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -53,6 +58,12 @@ public class MainCtrl implements Initializable {
     private Pane btnmin;
     @FXML
     private Label labelmin;
+    @FXML
+    private Button EditBtn;
+
+    @Inject
+    private EditLog editLogController;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,7 +72,19 @@ public class MainCtrl implements Initializable {
             yOffset = event.getSceneY();
         });
 
-
+        EditBtn.setOnAction(event -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditLog.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         panetop.setOnMouseDragged(event -> {
             Stage stage = (Stage) panetop.getScene().getWindow();
@@ -159,7 +182,6 @@ public class MainCtrl implements Initializable {
             e.printStackTrace();
         }
     }
-
 
 
     // Modèle BienImmobilier

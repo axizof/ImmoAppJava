@@ -117,5 +117,6 @@
             </FXCollections>
         </items>
       </ChoiceBox>
+      <Button fx:id="EditBtn" layoutX="221.0" layoutY="329.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="156.0" text="Edit" />
     </children>
 </Pane>

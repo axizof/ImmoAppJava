@@ -61,7 +61,24 @@ public class AddBien {
             stmt.setDate(5, new Date(System.currentTimeMillis()));
             stmt.setInt(6, CheckInfo);
             stmt.executeUpdate();
+            sql = "SELECT ID FROM Logement WHERE libelle = ? AND adresse = ? AND cp = ? AND ville = ?";
+            PreparedStatement stmt2 = conn.prepareStatement(sql);
+            stmt2.setString(1, libelle);
+            stmt2.setString(2, adresselog);
+            stmt2.setString(3, cp);
+            stmt2.setString(4, ville);
+            ResultSet rs = stmt2.executeQuery();
+            int idlogInd = rs.getInt("ID");
+            for (int i = 0; i < ImagesBase64.size(); i++) {
+                sql = "INSERT INTO Image (id_Logement, image) " +
+                        "VALUES (?, ?)";
+                PreparedStatement stmt3 = conn.prepareStatement(sql);
+                stmt3.setInt(1, idlogInd);
+                stmt3.setString(2, ImagesBase64.get(i));
+                stmt3.executeUpdate();
+            }
             stmt.close();
+            stmt2.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

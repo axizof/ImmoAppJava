@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -19,13 +21,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.StageStyle;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainCtrl implements Initializable {
@@ -66,6 +67,11 @@ public class MainCtrl implements Initializable {
     @FXML
     private Label libelleinfo;
 
+    @FXML
+    private ImageView ImageView;
+
+    private List<byte[]> imagesForSelectedLogement = new ArrayList<>();
+
 
 
     @Override
@@ -89,6 +95,24 @@ public class MainCtrl implements Initializable {
                 e.printStackTrace();
             }
         });
+
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Mettre à jour le tableau d'images pour le logement sélectionné
+                imagesForSelectedLogement = getImagesForLogement(newValue.getIdlog());
+                // Afficher la première image (s'il y en a) dans l'ImageView
+                if (!imagesForSelectedLogement.isEmpty()) {
+                    displayImage(imagesForSelectedLogement.get(0));
+                } else {
+                    // Effacer l'ImageView s'il n'y a pas d'images
+                    ImageView.setImage(null);
+                }
+            } else {
+                // Si aucun logement n'est sélectionné, effacer l'ImageView
+                ImageView.setImage(null);
+            }
+        });
+
 
         panetop.setOnMouseDragged(event -> {
             Stage stage = (Stage) panetop.getScene().getWindow();
@@ -149,6 +173,47 @@ public class MainCtrl implements Initializable {
 
         // Chargement des logements depuis la base de données
         loadLogementsFromDatabase();
+    }
+
+    private List<byte[]> getImagesForLogement(int logementId) {
+        List<byte[]> images = new ArrayList<>();
+        String jdbcUrl = "jdbc:mysql://172.19.0.32:3306/immoAPP";
+        String username = "mysqluser";
+        String password = "0550002D";
+
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+            String sql = "SELECT photo FROM Photo WHERE id_Equipement = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, logementId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Blob blob = rs.getBlob("photo");
+                if (blob != null) {
+                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                    images.add(imageBytes);
+                }
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return images;
+    }
+
+    private void displayImage(byte[] imageBytes) {
+        try {
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+            Image image = new Image(inputStream);
+            ImageView.setImage(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Méthode pour filtrer les biens par code postal

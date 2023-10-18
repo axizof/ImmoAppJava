@@ -78,7 +78,7 @@
       </Label>
       <Pane layoutX="1118.0" layoutY="160.0" prefHeight="206.0" prefWidth="258.0" style="-fx-background-color: #837F85;">
          <children>
-            <ImageView fitHeight="206.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ImageView" fitHeight="206.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
          </children></Pane>
       <Button layoutX="1073.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="&lt;-" />
       <Button layoutX="1386.0" layoutY="252.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />

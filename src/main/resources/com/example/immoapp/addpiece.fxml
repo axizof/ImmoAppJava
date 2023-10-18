@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="688.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.AddPiece">
+    <children>
+        <Label layoutX="269.0" layoutY="31.0" text="Ajouter une pièce" textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="25.0" />
+            </font>
+        </Label>
+        <Label layoutX="165.0" layoutY="93.0" prefHeight="26.0" prefWidth="68.0" text="Pièce : " textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </Label>
+        <TextField fx:id="libelle" layoutX="107.0" layoutY="126.0" prefHeight="40.0" prefWidth="184.0" promptText="ex : Salon" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+            <font>
+                <Font size="19.0" />
+            </font></TextField>
+        <Button layoutX="482.0" layoutY="365.0" mnemonicParsing="false" onAction="#BtnAjoutClick" prefHeight="60.0" prefWidth="127.0" text="Ajouter">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Button>
+        <Button layoutX="118.0" layoutY="395.0" mnemonicParsing="false" onAction="#BtnAjoutImage" prefHeight="30.0" prefWidth="127.0" text="Ajouter une image">
+            <font>
+                <Font name="System Bold" size="10.0" />
+            </font>
+        </Button>
+        <Pane layoutX="102.0" layoutY="190.0" prefHeight="199.0" prefWidth="334.0" style="-fx-background-color: #837F85;">
+            <children>
+                <Button layoutX="345.0" layoutY="84.0" mnemonicParsing="false" onAction="#BtnRightPreview" text="-&gt;" />
+                <ImageView fx:id="ImagePreview" fitHeight="199.0" fitWidth="346.0" layoutX="-6.0" pickOnBounds="true" />
+            </children></Pane>
+        <Button layoutX="62.0" layoutY="277.0" mnemonicParsing="false" onAction="#BtnLeftPreview" text="&lt;-" />
+        <Button layoutX="291.0" layoutY="395.0" mnemonicParsing="false" onAction="#BtnSupprImage" prefHeight="30.0" prefWidth="127.0" text="Supprimer L'image">
+            <font>
+                <Font name="System Bold" size="9.0" />
+            </font>
+        </Button>
+        <Label layoutX="479.0" layoutY="93.0" prefHeight="26.0" prefWidth="88.0" text="Surface : " textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </Label>
+        <Spinner layoutX="418.0" fx:id="surface" layoutY="126.0" prefHeight="40.0" prefWidth="184.0" style="-fx-background-color: #837F85; -fx-background-color: #837F85;" />
+    </children>
+</Pane>

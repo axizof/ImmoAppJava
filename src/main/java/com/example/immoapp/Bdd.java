@@ -19,7 +19,7 @@ public class Bdd {
         try{
             con = DriverManager.getConnection(URL,login,password);
             System.out.println("Connexion à la base réussi");
-        }catch(SQLException e){
+        } catch(SQLException e){
             System.out.println("ERREUR");
             System.out.println(e.getMessage());
             SQLLogException sqlLogException = new SQLLogException(e);

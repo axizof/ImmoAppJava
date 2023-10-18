@@ -9,3 +9,4 @@ CREATE TABLE error_log (
 
 
 // https://stackoverflow.com/questions/60184035/java-fx-image-upload-from-file
+

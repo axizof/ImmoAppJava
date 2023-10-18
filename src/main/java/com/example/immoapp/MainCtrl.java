@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,11 +63,14 @@ public class MainCtrl implements Initializable {
     private Button EditBtn;
     @FXML
     private Button AddBtnLog;
+    @FXML
+    private Label libelleinfo;
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         panetop.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -121,6 +125,14 @@ public class MainCtrl implements Initializable {
             filterByPostalCode(newValue);
         });
 
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                libelleinfo.setText(newValue.getNom());
+            } else {
+                libelleinfo.setText("");
+            }
+        });
+
         AddBtnLog.setOnAction(event -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBien.fxml"));
             Parent root;
@@ -138,7 +150,10 @@ public class MainCtrl implements Initializable {
         // Chargement des logements depuis la base de données
         loadLogementsFromDatabase();
     }
+
     // Méthode pour filtrer les biens par code postal
+
+
     private void filterByPostalCode(String postalCode) {
         if (postalCode == null || postalCode.isEmpty()) {
             // Si le champ est vide on affiche tous les biens
@@ -166,9 +181,10 @@ public class MainCtrl implements Initializable {
             Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
 
             // requête SQL pour sélectionner les logements
-            String sql = "SELECT L.libelle, COUNT(P.id_Logement), L.cp, L.ville, L.id, L.adresse " +
-                    "FROM Logement L " +
-                    "JOIN Piece P ON L.id = P.id_Logement";
+            String sql = "SELECT L.libelle, COUNT(P.id_Logement) AS nbPieces, L.cp, L.ville, L.id, L.adresse\n" +
+                    "FROM Logement L\n" +
+                    "LEFT JOIN Piece P ON L.id = P.id_Logement\n" +
+                    "GROUP BY L.libelle, L.cp, L.ville, L.id, L.adresse";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             // Exécution de la requête SQL
@@ -177,7 +193,7 @@ public class MainCtrl implements Initializable {
             // Parcour les résultats et ajouter les logements à la liste
             while (rs.next()) {
                 String libelle = rs.getString("libelle");
-                int nbPieces = rs.getInt("COUNT(P.id_Logement)");
+                int nbPieces = rs.getInt("nbPieces");
                 String cp = rs.getString("cp");
                 String ville = rs.getString("ville");
                 int idlog = rs.getInt("id");

@@ -70,9 +70,7 @@ public class MainCtrl implements Initializable {
     @FXML
     private ImageView ImageView;
 
-    private List<byte[]> imagesForSelectedLogement = new ArrayList<>();
-
-
+    private List<String> images = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -96,22 +94,6 @@ public class MainCtrl implements Initializable {
             }
         });
 
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                // Mettre à jour le tableau d'images pour le logement sélectionné
-                imagesForSelectedLogement = getImagesForLogement(newValue.getIdlog());
-                // Afficher la première image (s'il y en a) dans l'ImageView
-                if (!imagesForSelectedLogement.isEmpty()) {
-                    displayImage(imagesForSelectedLogement.get(0));
-                } else {
-                    // Effacer l'ImageView s'il n'y a pas d'images
-                    ImageView.setImage(null);
-                }
-            } else {
-                // Si aucun logement n'est sélectionné, effacer l'ImageView
-                ImageView.setImage(null);
-            }
-        });
 
 
         panetop.setOnMouseDragged(event -> {
@@ -175,46 +157,7 @@ public class MainCtrl implements Initializable {
         loadLogementsFromDatabase();
     }
 
-    private List<byte[]> getImagesForLogement(int logementId) {
-        List<byte[]> images = new ArrayList<>();
-        String jdbcUrl = "jdbc:mysql://172.19.0.32:3306/immoAPP";
-        String username = "mysqluser";
-        String password = "0550002D";
 
-        try {
-            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
-            String sql = "SELECT photo FROM Photo WHERE id_Equipement = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, logementId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Blob blob = rs.getBlob("photo");
-                if (blob != null) {
-                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-                    images.add(imageBytes);
-                }
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return images;
-    }
-
-    private void displayImage(byte[] imageBytes) {
-        try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
-            Image image = new Image(inputStream);
-            ImageView.setImage(image);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     // Méthode pour filtrer les biens par code postal
 

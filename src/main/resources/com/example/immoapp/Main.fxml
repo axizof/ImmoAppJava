@@ -80,7 +80,7 @@
          <children>
             <ImageView fx:id="ImageView" fitHeight="206.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
          </children></Pane>
-      <Button layoutX="1073.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="&lt;-" />
-      <Button layoutX="1386.0" layoutY="252.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />
+      <Button onAction="#leftClickPreview" onlayoutX="1073.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="&lt;-" />
+      <Button onAction="#RightClickPreview" onlayoutX="1386.0" layoutY="252.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />
    </children>
 </Pane>

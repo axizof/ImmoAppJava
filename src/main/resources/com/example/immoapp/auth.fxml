@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="473.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.auth">
 <children>
       <Button fx:id="connexion" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleConnexion" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D9D9D9;" text="Se connecter">
@@ -52,5 +54,15 @@
                    </Label>
                </children></Pane>
          </children></Pane>
+      <ChoiceBox fx:id="ChoiceBoxConType" value="Mysql" layoutX="26.0" layoutY="65.0" prefHeight="25.0" prefWidth="127.0" style="-fx-background-color: #837F85;">
+          <items>
+              <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Mysql" />
+                  <String fx:value="Keyclaok" />
+              </FXCollections>
+          </items>
+         <effect>
+            <Glow />
+         </effect></ChoiceBox>
    </children>
 </Pane>

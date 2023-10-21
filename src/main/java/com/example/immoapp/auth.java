@@ -20,6 +20,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import org.mindrot.jbcrypt.BCrypt;
+import java.io.*;
+import java.net.*;
+
+import java.io.InputStreamReader;
+import java.net.URL;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 
 public class auth implements Initializable {
 
@@ -43,6 +58,8 @@ public class auth implements Initializable {
     private Pane btnmin;
     @FXML
     private Label labelmin;
+    @FXML
+    private ChoiceBox ChoiceBoxConType;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,7 +91,7 @@ public class auth implements Initializable {
         });
     }
     @FXML
-    private void handleConnexion(ActionEvent event) throws IOException {
+    private void handleConnexion(ActionEvent event) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         String enteredPassword = mdp.getText();
         String enteredLogin = login.getText();
 
@@ -86,34 +103,85 @@ public class auth implements Initializable {
             Stage stage = (Stage) connexion.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
-        }else {
-            Bdd bdd = new Bdd();
-            bdd.getConnexion();
-            try{
-                PreparedStatement login = bdd.con.prepareStatement("SELECT login,mdp FROM Employe WHERE login = ?");
-                login.setString(1, enteredLogin);
-                ResultSet resultat = login.executeQuery();
-                if(resultat.next()){
-                    if(BCrypt.checkpw(enteredPassword, resultat.getString(2))) {
-                        resultat.close();
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
-                        Parent root = loader.load();
-                        Stage stage = (Stage) connexion.getScene().getWindow();
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
+        } else {
+            if (ChoiceBoxConType.getValue().equals("Mysql")) {
+                Bdd bdd = new Bdd();
+                bdd.getConnexion();
+                try {
+                    PreparedStatement login = bdd.con.prepareStatement("SELECT login,mdp FROM Employe WHERE login = ?");
+                    login.setString(1, enteredLogin);
+                    ResultSet resultat = login.executeQuery();
+                    if (resultat.next()) {
+                        if (BCrypt.checkpw(enteredPassword, resultat.getString(2))) {
+                            resultat.close();
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
+                            Parent root = loader.load();
+                            Stage stage = (Stage) connexion.getScene().getWindow();
+                            Scene scene = new Scene(root);
+                            stage.setScene(scene);
+                        }
+                    } else {
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.setContentText("Mauvais login/mot de passe");
+                        a.show();
                     }
-                }else{
+                } catch (SQLException e) {
+                    SQLLogException sqlLogException = new SQLLogException(e);
+                    DatabaseManager.logError(sqlLogException);
+                    System.out.println(e);
+                }
+            } else {
+                TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    }
+                }
+                };
+
+                // Install the all-trusting trust manager
+                SSLContext sc = SSLContext.getInstance("SSL");
+                sc.init(null, trustAllCerts, new java.security.SecureRandom());
+                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+                // Create all-trusting host name verifier
+                HostnameVerifier allHostsValid = new HostnameVerifier() {
+                    public boolean verify(String hostname, SSLSession session) {
+                        return true;
+                    }
+                };
+
+                // Install the all-trusting host verifier
+                HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+
+                URL url = new URL("https://172.19.0.133:8443/realms/r-ethan/protocol/openid-connect/token");
+                String postData = "username=" + enteredLogin + "&password=" + enteredPassword + "&client_id=ap-immo-desktop&grant_type=password";
+                URLConnection con = url.openConnection();
+                con.setDoOutput(true);
+                try (DataOutputStream dos = new DataOutputStream(con.getOutputStream())) {
+                    dos.writeBytes(postData);
+                }
+                Reader reader = new InputStreamReader(con.getInputStream());
+                int ch = reader.read();
+                if (ch == -1) {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setContentText("Mauvais login/mot de passe");
                     a.show();
+                } else {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) connexion.getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
                 }
-            }catch (SQLException e){
-                SQLLogException sqlLogException = new SQLLogException(e);
-                DatabaseManager.logError(sqlLogException);
-                System.out.println(e);
             }
 
-
         }
+
     }
 }

@@ -11,9 +11,9 @@ public class Bdd {
     public Connection con;
 
     public Bdd(){
-        this.URL = "jdbc:mysql://172.19.0.32:3306/immoAPP";
-        this.login = "mysqluser";
-        this.password = "0550002D";
+        this.URL = "jdbc:mysql://localhost:3306/immoapp";
+        this.login = "root";
+        this.password = "";
     }
     public void getConnexion(){
         try{

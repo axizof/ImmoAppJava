@@ -5,19 +5,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="688.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.AddPiece">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="688.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.AddEquipement">
     <children>
-        <Label layoutX="269.0" layoutY="31.0" text="Ajouter une pièce" textFill="WHITE">
+        <Label layoutX="223.0" layoutY="31.0" text="Ajouter d'un équipement" textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="25.0" />
             </font>
         </Label>
-        <Label layoutX="165.0" layoutY="93.0" prefHeight="26.0" prefWidth="68.0" text="Pièce : " textFill="WHITE">
+        <Label layoutX="265.0" layoutY="88.0" prefHeight="26.0" prefWidth="138.0" text="Equipement  : " textFill="WHITE">
             <font>
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </Label>
-        <TextField fx:id="libelle" layoutX="107.0" layoutY="126.0" prefHeight="40.0" prefWidth="184.0" promptText="ex : Salon" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+        <TextField fx:id="libelle" layoutX="243.0" layoutY="121.0" prefHeight="40.0" prefWidth="184.0" promptText="ex : Télévision" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
             <font>
                 <Font size="19.0" />
             </font></TextField>
@@ -42,15 +42,5 @@
                 <Font name="System Bold" size="9.0" />
             </font>
         </Button>
-        <Label layoutX="479.0" layoutY="93.0" prefHeight="26.0" prefWidth="88.0" text="Surface : " textFill="WHITE">
-            <font>
-                <Font name="Calibri Bold" size="21.0" />
-            </font>
-        </Label>
-      <TextField fx:id="surface" layoutX="419.0" layoutY="126.0" prefHeight="40.0" prefWidth="184.0" promptText="ex : 10" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </TextField>
     </children>
 </Pane>

@@ -8,9 +8,9 @@ import java.sql.SQLException;
 public class DatabaseManager {
 
     public static void logError(SQLLogException sqlLogException) {
-        String jdbcUrl = "jdbc:mysql://172.19.0.32:3306/ImmoAppErr";
-        String username = "mysqluser";
-        String password = "0550002D";
+        String jdbcUrl = "jdbc:mysql://localhost:3306/immoapperr";
+        String username = "root";
+        String password = "";
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             String sql = "INSERT INTO error_log (error_type, error_message) VALUES (?, ?)";

@@ -10,8 +10,12 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.logging.Logger;
 
@@ -37,9 +41,9 @@ public class AddBien {
     private String encodedString = "";
     private String CurrentBLob64 = "";
 
-    String jdbcUrl = "jdbc:mysql://172.19.0.32:3306/immoAPP";
-    String username = "mysqluser";
-    String password = "0550002D";
+    String jdbcUrl = "jdbc:mysql://localhost:3306/immoapp";
+    String username = "root";
+    String password = "";
 
     public void addBien(String libelle, int nbPieces, String cp, String ville, int idlog, String adresselog) {
         int CheckInfo;
@@ -70,7 +74,7 @@ public class AddBien {
             ResultSet rs = stmt2.executeQuery();
             int idlogInd = rs.getInt("ID");
             for (int i = 0; i < ImagesBase64.size(); i++) {
-                sql = "INSERT INTO Image (id_Logement, image) " +
+                sql = "INSERT INTO Photo (id_Logement, photo) " +
                         "VALUES (?, ?)";
                 PreparedStatement stmt3 = conn.prepareStatement(sql);
                 stmt3.setInt(1, idlogInd);

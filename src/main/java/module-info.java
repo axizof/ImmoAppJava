@@ -4,9 +4,9 @@ module com.example.immoapp {
 
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
-    requires jbcrypt;
     requires java.desktop;
     requires javafx.swing;
+    requires jBCrypt;
 
     opens com.example.immoapp to javafx.fxml;
     exports com.example.immoapp;

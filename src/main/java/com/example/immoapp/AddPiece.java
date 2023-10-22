@@ -31,6 +31,12 @@ public class AddPiece {
     String username = "root";
     String password = "";
 
+    public void initialize() {
+        ConfigReader configReader = new ConfigReader();
+        jdbcUrl = configReader.getJdbcUrl();
+        username = configReader.getUsername();
+        password = configReader.getPassword();
+    }
     @FXML
     private ImageView ImagePreview;
     private ArrayList<String> ImagesBase64 = new ArrayList<String>();

@@ -44,6 +44,12 @@ public class AddBien {
     String jdbcUrl = "jdbc:mysql://localhost:3306/immoapp";
     String username = "root";
     String password = "";
+    public void initialize() {
+        ConfigReader configReader = new ConfigReader();
+        jdbcUrl = configReader.getJdbcUrl();
+        username = configReader.getUsername();
+        password = configReader.getPassword();
+    }
 
     public void addBien(String libelle, int nbPieces, String cp, String ville, int idlog, String adresselog) {
         int CheckInfo;
@@ -72,7 +78,10 @@ public class AddBien {
             stmt2.setString(3, cp);
             stmt2.setString(4, ville);
             ResultSet rs = stmt2.executeQuery();
-            int idlogInd = rs.getInt("ID");
+            int idlogInd = 0;
+            if (rs.next()) {
+                idlogInd = rs.getInt("ID");
+            }
             for (int i = 0; i < ImagesBase64.size(); i++) {
                 sql = "INSERT INTO Photo (id_Logement, photo) " +
                         "VALUES (?, ?)";

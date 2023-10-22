@@ -38,6 +38,15 @@ public class spsc implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ConfigReader configReader = new ConfigReader();
+
+        String jdbcUrl = configReader.getJdbcUrl();
+        String username = configReader.getUsername();
+        String password = configReader.getPassword();
+
+        System.out.println("jdbcUrl: " + jdbcUrl);
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
         pgbar.setProgress(0.0);
         new Thread(new Runnable() {
             @Override

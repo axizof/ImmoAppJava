@@ -16,6 +16,10 @@ public class Bdd {
         this.password = "";
     }
     public void getConnexion(){
+        ConfigReader configReader = new ConfigReader();
+        URL = configReader.getJdbcUrl();
+        login = configReader.getUsername();
+        password = configReader.getPassword();
         try{
             con = DriverManager.getConnection(URL,login,password);
             System.out.println("Connexion à la base réussi");

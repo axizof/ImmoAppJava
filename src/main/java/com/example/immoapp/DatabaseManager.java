@@ -6,12 +6,14 @@ import java.sql.SQLException;
 
 
 public class DatabaseManager {
-
+    static String jdbcUrl = "jdbc:mysql://localhost:3306/immoapp";
+    static String username = "root";
+    static String password = "";
     public static void logError(SQLLogException sqlLogException) {
-        String jdbcUrl = "jdbc:mysql://localhost:3306/immoapperr";
-        String username = "root";
-        String password = "";
-
+        ConfigReader configReader = new ConfigReader();
+        jdbcUrl = configReader.getJdbcUrl();
+        username = configReader.getUsername();
+        password = configReader.getPassword();
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             String sql = "INSERT INTO error_log (error_type, error_message) VALUES (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

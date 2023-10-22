@@ -57,6 +57,7 @@
             <TableColumn fx:id="codePostalColumn" text="Code Postal" />
             <TableColumn fx:id="villeColumn" text="Ville" />
             <TableColumn fx:id="adresselog" text="Addresse" />
+            <TableColumn fx:id="TypeLog" text="Type" />
          </columns>
       </TableView>
       <Label layoutX="14.0" layoutY="57.0" text="Filtrer par code postal:" textFill="#fefefe">
@@ -67,7 +68,7 @@
          <effect>
             <Glow level="1.0" />
          </effect></TextField>
-      <Button fx:id="EditBtn" layoutX="782.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="141.0" text="Edit Logement" />
+      <Button fx:id="EditBtn" layoutX="782.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleEditBtnClick" prefHeight="25.0" prefWidth="141.0" text="Edit Logement" />
       <Button fx:id="AddBtnLog" layoutX="928.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Add Logement" />
       <Label fx:id="libelleinfo" alignment="CENTER" contentDisplay="CENTER" layoutX="1080.0" layoutY="89.0" prefHeight="68.0" prefWidth="337.0" text="   " textAlignment="CENTER" textFill="#fefefe">
          <effect>
@@ -111,5 +112,6 @@
       <Button layoutX="1385.0" layoutY="711.0" mnemonicParsing="false" onAction="#rigthprevpiece" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />
       <Button layoutX="1073.0" layoutY="711.0" mnemonicParsing="false" onAction="#leftprevpiece" prefHeight="25.0" prefWidth="35.0" text="&lt;-" />
       <Button fx:id="addEquipementBtn" layoutX="487.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleAddEquipementBtnClick" prefHeight="25.0" prefWidth="141.0" text="Add Equipement" />
+      <Button fx:id="RefreshList" layoutX="321.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRefreshListBtnClick" prefHeight="25.0" prefWidth="141.0" text="Refresh List" />
    </children>
 </Pane>

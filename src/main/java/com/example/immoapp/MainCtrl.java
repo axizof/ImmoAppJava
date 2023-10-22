@@ -46,6 +46,8 @@ public class MainCtrl implements Initializable {
     @FXML
     private TableColumn<BienImmobilier, String> adresselog;
     @FXML
+    private TableColumn<BienImmobilier, String> TypeLog;
+    @FXML
     private TextField filterTextField;
 
     private ObservableList<BienImmobilier> biens = FXCollections.observableArrayList();
@@ -77,11 +79,19 @@ public class MainCtrl implements Initializable {
     private List<String> imageslog = new ArrayList<>();
 
     private int idLogement;
+    private int idPiece;
+    private int nbTypeLog;
     int currentImageIndex = 0;
     String jdbcUrl = "jdbc:mysql://localhost:3306/immoapp";
     String username = "root";
     String password = "";
 
+    private String LibelleLogement;
+    private String AdresseLogement;
+    private String CpLogement;
+    private String VilleLogement;
+
+    private int nbPiece;
     private int currentPieceIndex = 0;
     private int currentImageIndexPiece = 0;
 
@@ -95,25 +105,16 @@ public class MainCtrl implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ConfigReader configReader = new ConfigReader();
+        jdbcUrl = configReader.getJdbcUrl();
+        username = configReader.getUsername();
+        password = configReader.getPassword();
 
         panetop.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
 
-        EditBtn.setOnAction(event -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditLog.fxml"));
-            Parent root;
-            try {
-                root = loader.load();
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
 
 
 
@@ -146,6 +147,16 @@ public class MainCtrl implements Initializable {
         codePostalColumn.setCellValueFactory(cellData -> cellData.getValue().codePostalProperty());
         villeColumn.setCellValueFactory(cellData -> cellData.getValue().villeProperty());
         adresselog.setCellValueFactory(cellData -> cellData.getValue().addresseProperty());
+        TypeLog.setCellValueFactory(cellData -> {
+            IntegerProperty typeLogProperty = cellData.getValue().nbTypeLog();
+            String typeLogString = "";
+            if (typeLogProperty.get() == 1) {
+                typeLogString = "Appartement";
+            } else if (typeLogProperty.get() == 2) {
+                typeLogString = "Maison";
+            }
+            return new SimpleStringProperty(typeLogString);
+        });
 
         // Ajout d'un Listener pour le filtre par code postal
         filterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -157,7 +168,14 @@ public class MainCtrl implements Initializable {
                 libelleinfo.setText(newValue.getNom());
                 idLogement = newValue.getIdlog();
                 imageslog = getImagesForLogement(newValue.getIdlog());
+                nbTypeLog = newValue.getTypeLog();
+                LibelleLogement = newValue.getNom();
+                AdresseLogement = newValue.getAddresse();
+                CpLogement = newValue.getCodePostal();
+                VilleLogement = newValue.getVille();
+                nbPiece = newValue.getNbPieces();
                 loadPiecesForLogement(idLogement);
+                System.out.println(newValue.getTypeLog() + " " + nbTypeLog + " " + LibelleLogement + " " + newValue.getNom());
                 //System.out.println("Chargement des pièces pour le logement avec ID : " + idLogement);
                 if (!imageslog.isEmpty()) {
                     ImageView.setImage(new Image(imageslog.get(0)));
@@ -225,10 +243,10 @@ public class MainCtrl implements Initializable {
             Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
 
             // requête SQL pour sélectionner les logements
-            String sql = "SELECT L.libelle, COUNT(P.id_Logement) AS nbPieces, L.cp, L.ville, L.id, L.adresse\n" +
+            String sql = "SELECT L.libelle, COUNT(P.id_Logement) AS nbPieces, L.cp, L.ville, L.id, L.adresse , L.id_Type\n" +
                     "FROM Logement L\n" +
                     "LEFT JOIN Piece P ON L.id = P.id_Logement\n" +
-                    "GROUP BY L.libelle, L.cp, L.ville, L.id, L.adresse";
+                    "GROUP BY L.libelle, L.cp, L.ville, L.id, L.adresse, L.id_Type";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             // Exécution de la requête SQL
@@ -242,9 +260,11 @@ public class MainCtrl implements Initializable {
                 String ville = rs.getString("ville");
                 int idlog = rs.getInt("id");
                 String adresselog = rs.getString("adresse");
+                int TypeLog = rs.getInt("id_Type");
+
 
                 // Créez un objet BienImmobilier et ajout dans à la liste
-                BienImmobilier bien = new BienImmobilier(libelle, nbPieces, cp, ville, idlog, adresselog);
+                BienImmobilier bien = new BienImmobilier(libelle, nbPieces, cp, ville, idlog, adresselog, TypeLog);
                 biens.add(bien);
             }
 
@@ -418,6 +438,70 @@ public class MainCtrl implements Initializable {
         }
     }
 
+    public void handleAddEquipementBtnClick(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEquipement.fxml"));
+            Parent root = loader.load();
+            AddEquipement addPieceController = loader.getController();
+            addPieceController.setPiece(idPiece);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleEditBtnClick(ActionEvent actionEvent) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditLog.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+                EditLog EditLogController = loader.getController();
+                EditLogController.setIdLogement(idLogement);
+                EditLogController.setLibelleLogement(LibelleLogement);
+                EditLogController.setAdresseLogement(AdresseLogement);
+                EditLogController.setCpLogement(CpLogement);
+                EditLogController.setVilleLogement(VilleLogement);
+                String tempa = "";
+                if (nbTypeLog == 1) {
+                    tempa = "Appartement";
+                } else if (nbTypeLog == 2) {
+                    tempa = "Maison";
+                }
+                EditLogController.setTypeLog(tempa);
+                System.out.println(idLogement + LibelleLogement);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public void handleRefreshListBtnClick(ActionEvent actionEvent) {
+        tableView.refresh();
+        tableView.setItems(biens);
+        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        nomColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
+        nbPiecesColumn.setCellValueFactory(cellData -> cellData.getValue().nbPiecesProperty().asObject());
+        codePostalColumn.setCellValueFactory(cellData -> cellData.getValue().codePostalProperty());
+        villeColumn.setCellValueFactory(cellData -> cellData.getValue().villeProperty());
+        adresselog.setCellValueFactory(cellData -> cellData.getValue().addresseProperty());
+        TypeLog.setCellValueFactory(cellData -> {
+            IntegerProperty typeLogProperty = cellData.getValue().nbTypeLog();
+            String typeLogString = "";
+            if (typeLogProperty.get() == 1) {
+                typeLogString = "Appartement";
+            } else if (typeLogProperty.get() == 2) {
+                typeLogString = "Maison";
+            }
+            return new SimpleStringProperty(typeLogString);
+        });
+    }
+
 
     public class Piece {
         private int id;
@@ -469,13 +553,16 @@ public class MainCtrl implements Initializable {
         private final IntegerProperty idlog = new SimpleIntegerProperty();
         private final StringProperty adresselog = new SimpleStringProperty();
 
-        public BienImmobilier(String nom, int nbPieces, String codePostal, String ville,int idlog, String adresselog) {
+        private final IntegerProperty TypeLog = new SimpleIntegerProperty();
+
+        public BienImmobilier(String nom, int nbPieces, String codePostal, String ville,int idlog, String adresselog, int TypeLog) {
             this.nom.set(nom);
             this.nbPieces.set(nbPieces);
             this.codePostal.set(codePostal);
             this.ville.set(ville);
             this.idlog.set(idlog);
             this.adresselog.set(adresselog);
+            this.TypeLog.set(TypeLog);
         }
 
         // Getters
@@ -497,6 +584,12 @@ public class MainCtrl implements Initializable {
 
         public String getCodePostal() {
             return codePostal.get();
+        }
+        public int getTypeLog() {
+            return TypeLog.get();
+        }
+        public IntegerProperty nbTypeLog() {
+            return TypeLog;
         }
 
         public StringProperty codePostalProperty() {

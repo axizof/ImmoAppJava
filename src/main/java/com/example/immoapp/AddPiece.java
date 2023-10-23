@@ -45,7 +45,7 @@ public class AddPiece {
     private int idLogement;
 
     public boolean containsOnlyNumbers(String text) {
-        return text.matches("\\d+"); // Matches one or more digits (0-9)
+        return text.matches("\\d+");
     }
 
     public void setIdLogement(int idLogement) {
@@ -83,10 +83,10 @@ public class AddPiece {
             stmt.close();
             stmt2.close();
 
-            // Show a confirmation dialog
+
             showConfirmationDialog();
 
-            // Close the window
+
             closeWindow();
         } catch (SQLException e) {
             e.printStackTrace();

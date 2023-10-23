@@ -39,7 +39,7 @@ public class AddEquipement {
     private int idPiece;
 
     public boolean containsOnlyNumbers(String text) {
-        return text.matches("\\d+"); // Matches one or more digits (0-9)
+        return text.matches("\\d+");
     }
     public void initialize() {
         ConfigReader configReader = new ConfigReader();
@@ -49,7 +49,7 @@ public class AddEquipement {
     }
     public void addEquipement(String libelle, int id_Piece) {
         try (Connection conn = DriverManager.getConnection(jdbcUrl, username, password)) {
-            // Vérifiez d'abord si un équipement avec le même libellé existe déjà.
+
             String checkSql = "SELECT id FROM Equipement WHERE libelle = ? AND id_Piece = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
             checkStmt.setString(1, libelle);
@@ -59,7 +59,7 @@ public class AddEquipement {
             if (checkRs.next()) {
                 showDuplicateEquipementAlert();
             } else {
-                // L'équipement est unique, vous pouvez l'ajouter.
+
                 String insertSql = "INSERT INTO Equipement (libelle, id_Piece) VALUES (?, ?)";
                 PreparedStatement insertStmt = conn.prepareStatement(insertSql);
                 insertStmt.setString(1, libelle);

@@ -130,7 +130,7 @@ public class AddBien {
 
     public void BtnAjoutImage(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        //Set extension filter
+
         FileChooser.ExtensionFilter extFilterJPG
                 = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
         FileChooser.ExtensionFilter extFilterjpg
@@ -141,7 +141,7 @@ public class AddBien {
                 = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
         fileChooser.getExtensionFilters()
                 .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
-        //Show open file dialog
+
         File file = fileChooser.showOpenDialog(null);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {

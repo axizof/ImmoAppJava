@@ -184,9 +184,9 @@ public class MainCtrl implements Initializable {
             }
         });
 
-        // Initialisation de la TableView avec les données des biens
+
         tableView.setItems(biens);
-        // Association des colonnes de la TableView aux propriétés du modèle BienImmobilier
+
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
         nbPiecesColumn.setCellValueFactory(cellData -> cellData.getValue().nbPiecesProperty().asObject());
@@ -204,7 +204,7 @@ public class MainCtrl implements Initializable {
             return new SimpleStringProperty(typeLogString);
         });
 
-        // Ajout d'un Listener pour le filtre par code postal
+
         filterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filterByPostalCode(newValue);
         });
@@ -221,7 +221,7 @@ public class MainCtrl implements Initializable {
                 VilleLogement = newValue.getVille();
                 nbPiece = newValue.getNbPieces();
                 loadPiecesForLogement(idLogement);
-                //System.out.println("Chargement des pièces pour le logement avec ID : " + idLogement);
+
                 if (!imageslog.isEmpty()) {
                     ImageView.setImage(new Image(imageslog.get(0)));
                 } else {
@@ -247,7 +247,7 @@ public class MainCtrl implements Initializable {
             }
         });
 
-        // Chargement des logements depuis la base de données
+
         loadLogementsFromDatabase();
     }
 
@@ -363,38 +363,38 @@ public class MainCtrl implements Initializable {
 
     private void filterByPostalCode(String postalCode) {
         if (postalCode == null || postalCode.isEmpty()) {
-            // Si le champ est vide on affiche tous les biens
+
             tableView.setItems(biens);
         } else {
-            // Filtre de la liste des biens en fonction du code postal
+
             ObservableList<BienImmobilier> filteredList = FXCollections.observableArrayList();
             for (BienImmobilier bien : biens) {
                 if (bien.getCodePostal().contains(postalCode)) {
                     filteredList.add(bien);
                 }
             }
-            // Mettre à jour la TableView suivant les résultats du filtre
+
             tableView.setItems(filteredList);
         }
     }
-    // chargement des logements depuis la base de données
+
     private void loadLogementsFromDatabase() {
 
         try {
-            // connexion à la base de données
+
             Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
 
-            // requête SQL pour sélectionner les logements
+
             String sql = "SELECT L.libelle, COUNT(P.id_Logement) AS nbPieces, L.cp, L.ville, L.id, L.adresse , L.id_Type\n" +
                     "FROM Logement L\n" +
                     "LEFT JOIN Piece P ON L.id = P.id_Logement\n" +
                     "GROUP BY L.libelle, L.cp, L.ville, L.id, L.adresse, L.id_Type";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            // Exécution de la requête SQL
+
             ResultSet rs = stmt.executeQuery();
 
-            // Parcour les résultats et ajouter les logements à la liste
+
             while (rs.next()) {
                 String libelle = rs.getString("libelle");
                 int nbPieces = rs.getInt("nbPieces");
@@ -405,12 +405,12 @@ public class MainCtrl implements Initializable {
                 int TypeLog = rs.getInt("id_Type");
 
 
-                // Créez un objet BienImmobilier et ajout dans à la liste
+
                 BienImmobilier bien = new BienImmobilier(libelle, nbPieces, cp, ville, idlog, adresselog, TypeLog);
                 biens.add(bien);
             }
 
-            // Fermer les truc ouvert
+
             rs.close();
             stmt.close();
             conn.close();
@@ -425,7 +425,7 @@ public class MainCtrl implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddPiece.fxml"));
             Parent root = loader.load();
             AddPiece addPieceController = loader.getController();
-            addPieceController.setIdLogement(idLogement); // Passer l'ID du logement
+            addPieceController.setIdLogement(idLogement);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
@@ -670,11 +670,11 @@ public class MainCtrl implements Initializable {
 
     @FXML
     private void handleDeleteEquipementBtnClick(ActionEvent event) {
-        // Récupérer l'équipement sélectionné dans le tableviewequipement
+
         Equipement selectedEquipement = tableviewequipement.getSelectionModel().getSelectedItem();
 
         if (selectedEquipement != null) {
-            // Demander une confirmation à l'utilisateur
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation de suppression");
             alert.setHeaderText("Suppression de l'équipement");
@@ -682,14 +682,14 @@ public class MainCtrl implements Initializable {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                // Supprimer l'équipement de la base de données
+
                 int equipementId = selectedEquipement.getId();
                 deleteEquipement(equipementId);
 
-                // Supprimer les photos liées à cet équipement de la base de données
+
                 deletePhotosForEquipement(equipementId);
 
-                // Supprimer l'équipement du tableviewequipement
+
                 tableviewequipement.getItems().remove(selectedEquipement);
             }
         } else {
@@ -946,7 +946,7 @@ public class MainCtrl implements Initializable {
     }
 
 
-    // Modèle BienImmobilier
+
     public static class BienImmobilier {
         private final StringProperty nom = new SimpleStringProperty();
         private final IntegerProperty nbPieces = new SimpleIntegerProperty();
@@ -967,7 +967,7 @@ public class MainCtrl implements Initializable {
             this.TypeLog.set(TypeLog);
         }
 
-        // Getters
+
         public String getNom() {
             return nom.get();
         }

@@ -95,9 +95,9 @@ public class auth implements Initializable {
         String enteredPassword = mdp.getText();
         String enteredLogin = login.getText();
 
-        // Check if the entered password is equal to "admin"
+
         if ("admin".equals(enteredPassword)) {
-            // Load the new scene (Main.fxml in this example)
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) connexion.getScene().getWindow();
@@ -144,19 +144,19 @@ public class auth implements Initializable {
                 }
                 };
 
-                // Install the all-trusting trust manager
+
                 SSLContext sc = SSLContext.getInstance("SSL");
                 sc.init(null, trustAllCerts, new java.security.SecureRandom());
                 HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-                // Create all-trusting host name verifier
+
                 HostnameVerifier allHostsValid = new HostnameVerifier() {
                     public boolean verify(String hostname, SSLSession session) {
                         return true;
                     }
                 };
 
-                // Install the all-trusting host verifier
+
                 HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 
                 URL url = new URL("https://172.19.0.133:8443/realms/r-ethan/protocol/openid-connect/token");

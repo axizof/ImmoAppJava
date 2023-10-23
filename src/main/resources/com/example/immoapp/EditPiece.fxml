@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="688.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.EditPiece">
+    <children>
+        <Label layoutX="262.0" layoutY="31.0" text="Modifier une pièce" textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="25.0" />
+            </font>
+        </Label>
+        <Label layoutX="165.0" layoutY="93.0" prefHeight="26.0" prefWidth="68.0" text="Pièce : " textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </Label>
+        <TextField fx:id="libelle" layoutX="107.0" layoutY="126.0" prefHeight="40.0" prefWidth="184.0" promptText="ex : Salon" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+            <font>
+                <Font size="19.0" />
+            </font></TextField>
+        <Button layoutX="273.0" layoutY="198.0" mnemonicParsing="false" onAction="#BtnAjoutClick" prefHeight="60.0" prefWidth="174.0" text="Modifier">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Button>
+        <Label layoutX="479.0" layoutY="93.0" prefHeight="26.0" prefWidth="88.0" text="Surface : " textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="21.0" />
+            </font>
+        </Label>
+        <TextField fx:id="surface" layoutX="419.0" layoutY="126.0" prefHeight="40.0" prefWidth="184.0" promptText="ex : 10" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </TextField>
+    </children>
+</Pane>

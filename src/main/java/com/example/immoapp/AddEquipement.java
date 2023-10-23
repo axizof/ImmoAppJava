@@ -55,9 +55,8 @@ public class AddEquipement {
             checkStmt.setString(1, libelle);
             checkStmt.setInt(2, id_Piece);
             ResultSet checkRs = checkStmt.executeQuery();
-
+            System.out.println(id_Piece);
             if (checkRs.next()) {
-                // Un équipement avec le même libellé existe déjà, affichez une alerte.
                 showDuplicateEquipementAlert();
             } else {
                 // L'équipement est unique, vous pouvez l'ajouter.
@@ -67,11 +66,20 @@ public class AddEquipement {
                 insertStmt.setInt(2, id_Piece);
                 insertStmt.executeUpdate();
 
+                String checkSql2 = "SELECT id FROM Equipement WHERE libelle = ? AND id_Piece = ?";
+                PreparedStatement checkStmt2 = conn.prepareStatement(checkSql);
+                checkStmt.setString(1, libelle);
+                checkStmt.setInt(2, id_Piece);
+                ResultSet checkRs2 = checkStmt.executeQuery();
+                int ideqInd = 0;
+                if (checkRs2.next()) {
+                    ideqInd = checkRs2.getInt("id");
+                }
 
                 for (int i = 0; i < ImagesBase64.size(); i++) {
                     String photoSql = "INSERT INTO Photo (id_Equipement, photo) VALUES (?, ?)";
                     PreparedStatement photoStmt = conn.prepareStatement(photoSql);
-                    photoStmt.setInt(1, id_Piece);
+                    photoStmt.setInt(1, ideqInd);
                     photoStmt.setString(2, ImagesBase64.get(i));
                     photoStmt.executeUpdate();
                 }

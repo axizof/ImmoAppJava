@@ -2,6 +2,7 @@ package com.example.immoapp;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.sql.*;
 
@@ -76,8 +77,12 @@ public class EditLog {
 
                 if (rowsUpdated > 0) {
                     showAlert("Success", "Logement a été mis à jour avec succès.");
+                    connection.close();
+                    preparedStatement.close();
                 } else {
                     showAlert("Error", "Échec de la mise à jour du Logement.");
+                    connection.close();
+                    preparedStatement.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

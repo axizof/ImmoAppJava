@@ -10,7 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,9 +22,12 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.stage.StageStyle;
 
-import java.io.ByteArrayInputStream;
+import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Optional;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -76,7 +81,12 @@ public class MainCtrl implements Initializable {
     @FXML
     private ImageView ImageViewPiece;
 
+    @FXML
+    private ImageView ImageViewEquipement;
+    @FXML
+    private TableView<Equipement> tableviewequipement;
     private List<String> imageslog = new ArrayList<>();
+    private int surfacePIece = 0;
 
     private int idLogement;
     private int idPiece;
@@ -90,18 +100,31 @@ public class MainCtrl implements Initializable {
     private String AdresseLogement;
     private String CpLogement;
     private String VilleLogement;
+    private String LibellePiece;
 
     private int nbPiece;
     private int currentPieceIndex = 0;
     private int currentImageIndexPiece = 0;
 
+    private int currentImageIndexEquipement = 0;
+
 
     ObservableList<Piece> pieces = FXCollections.observableArrayList();
     @FXML
-    private TableView tableviewpiece;
+    private TableView<Piece> tableviewpiece;
 
+
+    private int id_PIece;
+
+    private int idpie;
+    @FXML
+    private TableColumn<Equipement, String> nomEquipementColumn;
+    @FXML
+    private TableColumn<Equipement, String> descriptionEquipementColumn;
 
     private ArrayList<String> imagespiece = new ArrayList<String>();
+
+    private ArrayList<String> imagesequipement = new ArrayList<String>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -114,7 +137,6 @@ public class MainCtrl implements Initializable {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
-
 
 
 
@@ -136,6 +158,30 @@ public class MainCtrl implements Initializable {
         labelmin.setOnMouseClicked((MouseEvent event) -> {
             Stage stage = (Stage) panetop.getScene().getWindow();
             stage.setIconified(true);
+        });
+
+        tableviewequipement.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                idpie = newValue.getId();
+                imagesequipement = loadEquipementsImage(idpie);
+                if (imagesequipement.size() >0 && imagesequipement.get(0) != null){
+                    ImageViewEquipement.setImage(new Image(imagesequipement.get(0)));
+                }
+                currentImageIndexEquipement = 0;
+            }
+        });
+
+        tableviewpiece.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                int idPiecee = newSelection.getId();
+                surfacePIece = newSelection.getSurface();
+                LibellePiece = newSelection.getLibelle();
+                id_PIece = idPiecee;
+                List<Equipement> equipements = loadEquipementsForPiece(id_PIece);
+                ObservableList<Equipement> equipementList = FXCollections.observableArrayList(equipements);
+                tableviewequipement.setItems(equipementList);
+                displayImageAtIndex(0);
+            }
         });
 
         // Initialisation de la TableView avec les données des biens
@@ -175,7 +221,6 @@ public class MainCtrl implements Initializable {
                 VilleLogement = newValue.getVille();
                 nbPiece = newValue.getNbPieces();
                 loadPiecesForLogement(idLogement);
-                System.out.println(newValue.getTypeLog() + " " + nbTypeLog + " " + LibelleLogement + " " + newValue.getNom());
                 //System.out.println("Chargement des pièces pour le logement avec ID : " + idLogement);
                 if (!imageslog.isEmpty()) {
                     ImageView.setImage(new Image(imageslog.get(0)));
@@ -206,6 +251,103 @@ public class MainCtrl implements Initializable {
         loadLogementsFromDatabase();
     }
 
+    private void deletePhotosForPiece(int pieceID) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+            String deletePhotosSQL = "DELETE FROM photo WHERE id_Piece = ?";
+            PreparedStatement deletePhotosStmt = conn.prepareStatement(deletePhotosSQL);
+            deletePhotosStmt.setInt(1, pieceID);
+            deletePhotosStmt.executeUpdate();
+
+            deletePhotosStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteEquipementsForPiece(int pieceID) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+            String deleteEquipementsSQL = "DELETE FROM equipement WHERE id_Piece = ?";
+            PreparedStatement deleteEquipementsStmt = conn.prepareStatement(deleteEquipementsSQL);
+            deleteEquipementsStmt.setInt(1, pieceID);
+            deleteEquipementsStmt.executeUpdate();
+
+            deleteEquipementsStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void deletePiece(int pieceID) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+            String deletePieceSQL = "DELETE FROM piece WHERE id = ?";
+            PreparedStatement deletePieceStmt = conn.prepareStatement(deletePieceSQL);
+            deletePieceStmt.setInt(1, pieceID);
+            deletePieceStmt.executeUpdate();
+
+            deletePieceStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<Equipement> loadEquipementsForPiece(int idPiece) {
+        List<Equipement> equipements = new ArrayList<>();
+
+        String query = "SELECT * FROM equipement WHERE id_Piece = ?";
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, idPiece);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String libelle = resultSet.getString("libelle");
+                int idPiecee = resultSet.getInt("id_Piece");
+                Equipement equipement = new Equipement(id, libelle, idPiecee);
+                equipements.add(equipement);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return equipements;
+    }
+
+    public ArrayList<String> loadEquipementsImage(int idEquipement) {
+        ArrayList<String> images = new ArrayList<>();
+
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+            String sql = "SELECT photo FROM Photo WHERE id_Equipement = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idEquipement);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String imageBytes = rs.getString("photo");
+                images.add(imageBytes);
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return images;
+    }
 
     public void loadPiecesForLogement(int idLogement) {
         pieces.clear();
@@ -401,7 +543,6 @@ public class MainCtrl implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        displayImageAtIndex(0);
         return images;
     }
     private void displayImageAtIndex(int index) {
@@ -439,20 +580,30 @@ public class MainCtrl implements Initializable {
     }
 
     public void handleAddEquipementBtnClick(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEquipement.fxml"));
-            Parent root = loader.load();
-            AddEquipement addPieceController = loader.getController();
-            addPieceController.setPiece(idPiece);
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (id_PIece > -1) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEquipement.fxml"));
+                Parent root = loader.load();
+                AddEquipement addPieceController = loader.getController();
+                addPieceController.setPiece(id_PIece);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            showAlert("Error", "Vous devez séléctionnez une pièce.");
         }
     }
-
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
     public void handleEditBtnClick(ActionEvent actionEvent) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EditLog.fxml"));
             Parent root;
@@ -471,7 +622,6 @@ public class MainCtrl implements Initializable {
                     tempa = "Maison";
                 }
                 EditLogController.setTypeLog(tempa);
-                System.out.println(idLogement + LibelleLogement);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(new Scene(root));
@@ -482,7 +632,9 @@ public class MainCtrl implements Initializable {
     }
 
     public void handleRefreshListBtnClick(ActionEvent actionEvent) {
+        tableView.getItems().clear();
         tableView.refresh();
+        loadLogementsFromDatabase();
         tableView.setItems(biens);
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
@@ -502,6 +654,256 @@ public class MainCtrl implements Initializable {
         });
     }
 
+    public void rigthprevequip(ActionEvent actionEvent) {
+        if (currentImageIndexEquipement < imagesequipement.size() - 1) {
+            currentImageIndexEquipement++;
+            ImageViewEquipement.setImage(new Image(imagesequipement.get(currentImageIndexEquipement)));
+        }
+    }
+
+    public void leftprevequip(ActionEvent actionEvent) {
+        if (currentImageIndexEquipement > 0) {
+            currentImageIndexEquipement--;
+            ImageViewEquipement.setImage(new Image(imagesequipement.get(currentImageIndexEquipement)));
+        }
+    }
+
+    @FXML
+    private void handleDeleteEquipementBtnClick(ActionEvent event) {
+        // Récupérer l'équipement sélectionné dans le tableviewequipement
+        Equipement selectedEquipement = tableviewequipement.getSelectionModel().getSelectedItem();
+
+        if (selectedEquipement != null) {
+            // Demander une confirmation à l'utilisateur
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation de suppression");
+            alert.setHeaderText("Suppression de l'équipement");
+            alert.setContentText("Êtes-vous sûr de vouloir supprimer cet équipement ?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                // Supprimer l'équipement de la base de données
+                int equipementId = selectedEquipement.getId();
+                deleteEquipement(equipementId);
+
+                // Supprimer les photos liées à cet équipement de la base de données
+                deletePhotosForEquipement(equipementId);
+
+                // Supprimer l'équipement du tableviewequipement
+                tableviewequipement.getItems().remove(selectedEquipement);
+            }
+        } else {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Erreur");
+            errorAlert.setHeaderText("Aucun équipement sélectionné");
+            errorAlert.setContentText("Veuillez sélectionner un équipement à supprimer.");
+            errorAlert.showAndWait();
+        }
+    }
+
+    private void deleteEquipement(int equipementId) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+            String deleteEquipementQuery = "DELETE FROM equipement WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(deleteEquipementQuery);
+            stmt.setInt(1, equipementId);
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deletePhotosForEquipement(int equipementId) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+            String deletePhotosQuery = "DELETE FROM photo WHERE id_Equipement = ?";
+            PreparedStatement stmt = conn.prepareStatement(deletePhotosQuery);
+            stmt.setInt(1, equipementId);
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteAllPhotosForEquipementsInPiece(int pieceID) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+
+            String selectEquipementsSQL = "SELECT id FROM equipement WHERE id_Piece = ?";
+            PreparedStatement selectEquipementsStmt = conn.prepareStatement(selectEquipementsSQL);
+            selectEquipementsStmt.setInt(1, pieceID);
+
+
+            ResultSet equipementsRS = selectEquipementsStmt.executeQuery();
+
+
+            while (equipementsRS.next()) {
+                int equipementID = equipementsRS.getInt("id");
+                deletePhotosForEquipement(equipementID);
+            }
+
+            selectEquipementsStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void handleDeleteLogementBtnClick(ActionEvent actionEvent) {
+        deletePhotosForLogement(idLogement);
+        deleteEquipementsForLogement(idLogement);
+        deletePiecesForLogement(idLogement);
+        deleteLogement(idLogement);
+    }
+    private void deleteEquipementsForLogement(int logementID) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+            String deleteEquipementsSQL = "DELETE FROM equipement WHERE id_Piece IN (SELECT id FROM piece WHERE id_Logement = ?)";
+            PreparedStatement deleteEquipementsStmt = conn.prepareStatement(deleteEquipementsSQL);
+            deleteEquipementsStmt.setInt(1, logementID);
+            deleteEquipementsStmt.executeUpdate();
+
+            deleteEquipementsStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void deletePiecesForLogement(int logementID) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+
+            String deletePiecesSQL = "DELETE FROM piece WHERE id_Logement = ?";
+            PreparedStatement deletePiecesStmt = conn.prepareStatement(deletePiecesSQL);
+            deletePiecesStmt.setInt(1, logementID);
+            deletePiecesStmt.executeUpdate();
+
+            deletePiecesStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void deletePhotosForLogement(int logementID) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+            String deletePhotosSQL = "DELETE FROM photo WHERE id_Logement = ?";
+            PreparedStatement deletePhotosStmt = conn.prepareStatement(deletePhotosSQL);
+            deletePhotosStmt.setInt(1, logementID);
+            deletePhotosStmt.executeUpdate();
+
+            deletePhotosStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void deleteLogement(int logementID) {
+        try {
+            Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
+
+            String deleteLogementSQL = "DELETE FROM logement WHERE id = ?";
+            PreparedStatement deleteLogementStmt = conn.prepareStatement(deleteLogementSQL);
+            deleteLogementStmt.setInt(1, logementID);
+            deleteLogementStmt.executeUpdate();
+
+            deleteLogementStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleVoirGoogleMapBtnBtnClick(ActionEvent actionEvent) {
+        String AdresseLogementmodif = AdresseLogement.replace(" ", "+");
+        if (AdresseLogementmodif.length() > 3){
+            openWebPage("https://www.google.fr/maps/place/" + AdresseLogementmodif);
+        } else {
+            showAlert("Erreur","Vous n'avez pas séléctionnez de logement");
+        }
+    }
+
+    public static void openWebPage(String url) {
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    URI uri = new URI(url);
+                    desktop.browse(uri);
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("L'action BROWSE n'est pas supportée sur cet environnement.");
+            }
+        } else {
+            System.out.println("La classe Desktop n'est pas supportée sur cet environnement.");
+        }
+    }
+
+    public void handleDeletePieceBtnClick(ActionEvent actionEvent) {
+        System.out.println(id_PIece);
+        if (id_PIece > 0) {
+            deletePhotosForPiece(id_PIece);
+            deleteAllPhotosForEquipementsInPiece(id_PIece);
+            deleteEquipementsForPiece(id_PIece);
+            deletePiece(id_PIece);
+        } else {
+            showAlert("Error","Vous n'avez pas selectionnez de pièce");
+        }
+
+    }
+
+    public void handleModifierPieceBtnClick(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("EditPiece.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            EditPiece EditPieceController = loader.getController();
+            EditPieceController.setIdPiece(id_PIece);
+            EditPieceController.setSurface(surfacePIece);
+            EditPieceController.setLibelle(LibellePiece);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public class Equipement {
+        private int id;
+        private String libelle;
+        private int id_piece;
+
+        public Equipement(int id, String libelle, int id_piece) {
+            this.id = id;
+            this.libelle = libelle;
+            this.id_piece = id_piece;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getLibelle() {
+            return libelle;
+        }
+
+
+        public int getId_Piece() {
+            return id_piece;
+        }
+
+    }
 
     public class Piece {
         private int id;

@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="974.0" prefWidth="1428.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.MainCtrl">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="972.0" prefWidth="1786.0" style="-fx-background-color: #606063;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.immoapp.MainCtrl">
    <effect>
       <Glow />
    </effect>
    <children>
-      <Pane fx:id="panetop" prefHeight="41.0" prefWidth="1429.0" style="-fx-background-color: #837F85;">
+      <Pane fx:id="panetop" prefHeight="41.0" prefWidth="1785.0" style="-fx-background-color: #837F85;">
          <children>
-            <Pane fx:id="btnclose" layoutX="1382.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
+            <Pane fx:id="btnclose" layoutX="1742.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
                <children>
                   <Label fx:id="labelclose" layoutX="7.0" layoutY="-5.0" text="X" textAlignment="CENTER" textFill="#ff7077">
                      <font>
@@ -26,7 +26,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane fx:id="btnmin" layoutX="1336.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
+            <Pane fx:id="btnmin" layoutX="1696.0" layoutY="3.0" prefHeight="35.0" prefWidth="33.0" style="-fx-background-color: #C5C4C6;">
                <children>
                   <Label fx:id="labelmin" layoutX="11.0" layoutY="-7.0" text="-" textAlignment="CENTER" textFill="#68a8e1">
                      <font>
@@ -70,7 +70,7 @@
          </effect></TextField>
       <Button fx:id="EditBtn" layoutX="782.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleEditBtnClick" prefHeight="25.0" prefWidth="141.0" text="Edit Logement" />
       <Button fx:id="AddBtnLog" layoutX="928.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Add Logement" />
-      <Label fx:id="libelleinfo" alignment="CENTER" contentDisplay="CENTER" layoutX="1080.0" layoutY="89.0" prefHeight="68.0" prefWidth="337.0" text="   " textAlignment="CENTER" textFill="#fefefe">
+      <Label fx:id="libelleinfo" alignment="CENTER" contentDisplay="CENTER" layoutX="1280.0" layoutY="55.0" prefHeight="68.0" prefWidth="337.0" text="   " textAlignment="CENTER" textFill="#fefefe">
          <effect>
             <Glow />
          </effect>
@@ -78,14 +78,14 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <Pane layoutX="1118.0" layoutY="160.0" prefHeight="206.0" prefWidth="258.0" style="-fx-background-color: #837F85;">
+      <Pane layoutX="1319.0" layoutY="136.0" prefHeight="206.0" prefWidth="258.0" style="-fx-background-color: #837F85;">
          <children>
-            <ImageView fx:id="ImageView" fitHeight="206.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ImageView" fitHeight="206.0" fitWidth="258.0" pickOnBounds="true" />
          </children></Pane>
-      <Button layoutX="1073.0" layoutY="251.0" mnemonicParsing="false" onAction="#leftprev" prefHeight="25.0" prefWidth="35.0" text="&lt;-" />
-      <Button layoutX="1386.0" layoutY="252.0" mnemonicParsing="false" onAction="#rigthprev" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />
+      <Button layoutX="1270.0" layoutY="227.0" mnemonicParsing="false" onAction="#leftprev" prefHeight="25.0" prefWidth="35.0" text="&lt;-" />
+      <Button layoutX="1604.0" layoutY="227.0" mnemonicParsing="false" onAction="#rigthprev" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />
       <Button fx:id="addPieceBtn" layoutX="634.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleAddPieceBtnClick" prefHeight="25.0" prefWidth="141.0" text="Add Pièce" />
-      <TableView fx:id="tableviewpiece" layoutX="1104.0" layoutY="394.0" prefHeight="200.0" prefWidth="287.0">
+      <TableView fx:id="tableviewpiece" layoutX="1102.0" layoutY="394.0" prefHeight="200.0" prefWidth="287.0">
         <columns>
          <TableColumn prefWidth="50.0" text="ID">
             <cellValueFactory>
@@ -106,12 +106,43 @@
       </TableView>
       <Pane layoutX="1116.0" layoutY="620.0" prefHeight="206.0" prefWidth="258.0" style="-fx-background-color: #837F85;">
          <children>
-            <ImageView fx:id="ImageViewPiece" fitHeight="206.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ImageViewPiece" fitHeight="206.0" fitWidth="258.0" pickOnBounds="true" />
          </children>
       </Pane>
       <Button layoutX="1385.0" layoutY="711.0" mnemonicParsing="false" onAction="#rigthprevpiece" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />
       <Button layoutX="1073.0" layoutY="711.0" mnemonicParsing="false" onAction="#leftprevpiece" prefHeight="25.0" prefWidth="35.0" text="&lt;-" />
-      <Button fx:id="addEquipementBtn" layoutX="487.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleAddEquipementBtnClick" prefHeight="25.0" prefWidth="141.0" text="Add Equipement" />
+      <Button fx:id="addEquipementBtn" layoutX="1631.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleAddEquipementBtnClick" prefHeight="25.0" prefWidth="141.0" text="Add Equipement" />
       <Button fx:id="RefreshList" layoutX="321.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRefreshListBtnClick" prefHeight="25.0" prefWidth="141.0" text="Refresh List" />
+      <TableView fx:id="tableviewequipement" layoutX="1477.0" layoutY="394.0" prefHeight="200.0" prefWidth="287.0">
+         <columns>
+            <TableColumn prefWidth="50.0" text="ID">
+               <cellValueFactory>
+                  <PropertyValueFactory property="id" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="156.0" text="Libelle">
+               <cellValueFactory>
+                  <PropertyValueFactory property="libelle" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="78.0" text="id_Piece">
+               <cellValueFactory>
+                  <PropertyValueFactory property="id_Piece" />
+               </cellValueFactory>
+            </TableColumn>
+         </columns>
+      </TableView>
+      <Pane layoutX="1492.0" layoutY="620.0" prefHeight="206.0" prefWidth="258.0" style="-fx-background-color: #837F85;">
+         <children>
+            <ImageView fx:id="ImageViewEquipement" fitHeight="206.0" fitWidth="258.0" layoutX="2.0" layoutY="2.0" pickOnBounds="true" />
+         </children>
+      </Pane>
+      <Button layoutX="1747.0" layoutY="711.0" mnemonicParsing="false" onAction="#rigthprevequip" prefHeight="25.0" prefWidth="35.0" text="-&gt;" />
+      <Button layoutX="1448.0" layoutY="711.0" mnemonicParsing="false" onAction="#leftprevequip" prefHeight="25.0" prefWidth="35.0" text="&lt;-" />
+      <Button fx:id="DeleteEquipementBtn" layoutX="1477.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleDeleteEquipementBtnClick" prefHeight="25.0" prefWidth="141.0" text="Delete Equipement" />
+      <Button fx:id="DeleteLogementBtn" layoutX="485.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleDeleteLogementBtnClick" prefHeight="25.0" prefWidth="141.0" text="Delete Logement" />
+      <Button fx:id="VoirGoogleMapBtn" layoutX="1317.0" layoutY="856.0" mnemonicParsing="false" onAction="#handleVoirGoogleMapBtnBtnClick" prefHeight="68.0" prefWidth="231.0" text="Voir Sur GoogleMap" />
+      <Button fx:id="DeletePieceBtn" layoutX="1102.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleDeletePieceBtnClick" prefHeight="25.0" prefWidth="141.0" text="Delete Piece" />
+      <Button fx:id="modifierPieceBtn" layoutX="1249.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleModifierPieceBtnClick" prefHeight="25.0" prefWidth="141.0" text="Modifier Piece" />
    </children>
 </Pane>

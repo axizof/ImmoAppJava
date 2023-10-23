@@ -31,7 +31,7 @@
                 <Font name="Calibri Bold" size="21.0" />
             </font>
         </Label>
-        <TextField fx:id="adresse" layoutX="160.0" layoutY="173.0" prefHeight="39.0" prefWidth="506.0" promptText="ex : 4 rue dans ton cul" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
+        <TextField fx:id="adresse" layoutX="160.0" layoutY="173.0" prefHeight="39.0" prefWidth="506.0" promptText="ex : 4 rue du pré" style="-fx-background-color: #837F85; -fx-font-style: #ffffff;">
             <font>
                 <Font size="19.0" />
             </font>

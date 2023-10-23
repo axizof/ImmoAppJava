@@ -2,12 +2,12 @@ package com.example.immoapp;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -92,10 +92,29 @@ public class AddBien {
             }
             stmt.close();
             stmt2.close();
+            showConfirmationDialog();
+            closeWindow();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    private void showConfirmationDialog() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Logement ajouté !");
+
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        alert.getButtonTypes().setAll(okButton);
+
+        alert.showAndWait();
+    }
+    private void closeWindow() {
+        Stage stage = (Stage) titre.getScene().getWindow();
+        stage.close();
+    }
+
 
     public void BtnAjoutClick(ActionEvent actionEvent) {
         addBien(titre.getText(), 0, cp.getText(), ville.getText(), 0, adresse.getText());

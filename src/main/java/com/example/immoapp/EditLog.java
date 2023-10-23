@@ -34,7 +34,7 @@ public class EditLog {
 
 
     public boolean containsOnlyNumbers(String text) {
-        return text.matches("\\d+"); // Matches one or more digits (0-9)
+        return text.matches("\\d+");
     }
     public void initialize() {
         ConfigReader configReader = new ConfigReader();
